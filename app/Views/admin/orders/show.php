@@ -1,14 +1,17 @@
 <?php
+// Everything the customer gave at checkout, as recorded on the order itself.
 $details = [
     'Customer'   => $order['customer_name'] ?: '—',
-    'Email'      => $order['customer_email'] ?? '—',
+    'Phone'      => $order['customer_phone'] ?: '—',
+    'WhatsApp'   => $order['customer_whatsapp'] ?: '—',
+    'Email'      => $order['customer_email'] ?: '—',
     'Placed'     => $order['placed_on'] ?? '—',
     'Delivery'   => $order['delivery_date'] ?? '—',
     'Fulfilment' => $order['is_pickup']
         ? 'Self-pickup'
         : 'Delivery' . ($order['zone_name'] ? ' · ' . $order['zone_name'] : ''),
     'Payment'    => ($order['payment_method'] ?? '—') . ' · ' . ($order['payment_status'] ?? '—'),
-    'Address'    => $order['address'] ?? '—',
+    'Address'    => $order['address'] ?: '—',
     'Notes'      => $order['notes'] ?: '—',
 ];
 ob_start();
@@ -75,6 +78,15 @@ ob_start();
             <span style="flex:1"><?= esc($vv) ?></span>
           </div>
         <?php endforeach; ?>
+
+        <?php if (!empty($order['map_url'])): ?>
+          <div style="display:flex;gap:12px">
+            <span class="muted" style="min-width:88px;font-weight:700;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase">Map</span>
+            <span style="flex:1">
+              <a href="<?= esc($order['map_url'], 'attr') ?>" target="_blank" rel="noopener noreferrer">Open pinned location ↗</a>
+            </span>
+          </div>
+        <?php endif; ?>
       </div>
     </div>
 

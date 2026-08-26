@@ -25,7 +25,10 @@ class CustomerModel extends Model
         'id'         => 'permit_empty|is_natural_no_zero',
         'first_name' => 'required|min_length[2]|max_length[80]',
         'last_name'  => 'permit_empty|max_length[80]',
-        'email'      => 'required|valid_email|max_length[160]|is_unique[customers.email,id,{id}]',
+        // Guest checkout creates a customer with no email, so this cannot be
+        // `required` here. Auth::signup validates the email itself before
+        // registering, so registration is unaffected.
+        'email'      => 'permit_empty|valid_email|max_length[160]|is_unique[customers.email,id,{id}]',
         'phone'      => 'permit_empty|max_length[32]',
     ];
 

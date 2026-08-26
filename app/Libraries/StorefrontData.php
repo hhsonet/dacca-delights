@@ -217,6 +217,18 @@ class StorefrontData
                 'items'    => $items,
                 'address'  => $o['address'] ?? '',
                 'notes'    => $o['notes'] ?? '',
+                // Contact details as given on this order, not the current
+                // profile — an old order must keep showing what was agreed.
+                'customer'     => $o['customer_name'] ?? '',
+                'phone'        => $o['customer_phone'] ?? '',
+                'whatsapp'     => $o['customer_whatsapp'] ?? '',
+                'email'        => $o['customer_email'] ?? '',
+                'mapUrl'       => $o['map_url'] ?? '',
+                'paymentStatus' => $o['payment_status'] ?? '',
+                'deliveryDate' => $o['delivery_date'] ? date('F j, Y', strtotime($o['delivery_date'])) : '',
+                'isPickup'     => (bool) $o['is_pickup'],
+                'deliveryFee'  => (int) $o['delivery_fee'],
+                'total'        => (int) $o['total'],
             ];
         }
 

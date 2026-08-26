@@ -104,6 +104,48 @@ know before launch:
   degrades. Self-hosting the React/Babel bundle and the images is the fix if
   you'd rather not depend on third-party CDNs.
 
+**Ordering.** Checkout posts to `POST /order` (CSRF-protected, throttled to 12
+attempts per minute per IP) and is stored by
+`app/Libraries/OrderPlacer.php` in a single transaction across `orders` and
+`order_items`.
+
+Nothing about money is taken from the browser. Item prices, per-item minimums,
+the pooled bagel minimum, the delivery fee and the coupon discount are all
+re-read or re-derived from the database, so a tampered payload can change what
+is ordered but never what it costs. Order numbers are derived from the primary
+key (`DD-10000 + id`), not randomised, so they cannot collide.
+
+Also enforced server-side, independently of the client: mandatory product
+options (bread sugar/format/slice, chicken-puff filling), delivery date within
+the booking window, valid and served delivery zone, and cash-on-delivery only
+where `cod_allowed` is set.
+
+**Every order carries its own contact snapshot** — `customer_name`,
+`customer_phone`, `customer_whatsapp`, `customer_email`, `address`, `map_url`
+and `payment_method` are stored on the order row, for guests and registered
+customers alike. An order is a record of what was agreed at the time, so
+editing a profile later cannot rewrite the history of past orders, and a guest
+order survives with full details even when it has no account attached.
+
+Signed-in customers also get the order linked to their account via
+`customer_id`. Guests are matched to an existing **guest** row by phone;
+a number belonging to a *registered* account is deliberately never
+auto-attached, or anyone typing that number at checkout would have their order
+appear in that person's order history.
+
+When an order has its own snapshot, the dashboard reads only those fields —
+never a mix of the snapshot and the linked profile, which would otherwise show
+one person's name beside another's email.
+
+Two things still open before taking real money:
+
+- **No payment is actually collected.** bKash and Card mark the order `Paid`
+  without a gateway. Until one is integrated, treat those as "claims to have
+  paid" and confirm before baking.
+- **Nothing notifies the bakery.** Orders land in the database and the
+  dashboard, but no email/SMS/WhatsApp goes out, so someone has to watch
+  `/admin/orders`.
+
 **Admin dashboard.** Lives at `/admin`, behind the `admin` filter
 (`app/Filters/AdminFilter.php`). Staff accounts are in `admin_users` — a table
 entirely separate from `customers`, with its own session key (`adminId`), so a

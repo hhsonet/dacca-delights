@@ -132,6 +132,7 @@ const COUNTRY_CODES = [
 class Component extends DCLogic {
   state = { page:"<?= esc($page, 'js') ?>", slug:"<?= esc($slug ?? 'sourdough-bread', 'js') ?>", cart:{}, category:"<?= esc($category ?? 'Best Sellers', 'js') ?>", query:"<?= esc($query ?? '', 'js') ?>", shown:8, searchOpen:false, menuOpen:false,
             qty:1, payment:"", coupon:"", couponOk:false, orderNo:"", paid:"", toast:"", authMode:"<?= esc($authMode ?? 'login', 'js') ?>", authBusy:false,
+            orderBusy:false,
             authed: DD_SESSION.authed, customerName: DD_SESSION.name, customerLastName: DD_SESSION.lastName,
             customerEmail: DD_SESSION.email, customerPhone: DD_SESSION.phone,
             accountTab:"<?= esc($accountTab ?? 'Dashboard', 'js') ?>", showPw:false, remember:true, terms:false, orderIx:(function(){ const r = "<?= esc($orderRef ?? '', 'js') ?>"; if (!r) return 0; const i = ORDERS.findIndex(o => o.no.replace(/^#/, "") === r); return i < 0 ? 0 : i; })(), bulkSent:false, err:{},
@@ -420,6 +421,79 @@ class Component extends DCLogic {
     } catch (e) {
       this.setState({ authBusy: false });
       this.flash("Could not reach the server. Please try again.");
+    }
+  }
+  /**
+   * Send the checkout to the server, which re-prices everything from the
+   * database and stores the order. The invoice shown afterwards is built from
+   * what was actually saved, not from anything computed in the browser.
+   */
+  async submitOrder() {
+    const s = this.state;
+    if (s.orderBusy) return;
+    this.setState({ orderBusy: true });
+
+    const payload = {
+      cart: s.cart,
+      firstName: s.firstName, lastName: s.lastName,
+      localPhone: s.localPhone, waSame: s.waSame, waCode: s.waCode, waNumber: s.waNumber,
+      pickup: s.pickup, zone: s.zone,
+      house: s.house, line1: s.line1, line2: s.line2, zip: s.zip, mapsUrl: s.mapsUrl,
+      deliveryDate: s.deliveryDate,
+      payment: s.payment,
+      coupon: s.couponOk ? s.coupon : ""
+    };
+
+    try {
+      const headers = { "Content-Type": "application/json" };
+      headers[DD_CSRF.header] = DD_CSRF.token;
+
+      const res = await fetch(DD_BASE + "order", {
+        method: "POST", headers, credentials: "same-origin",
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
+      if (data && data.token) DD_CSRF.token = data.token;
+
+      if (!res.ok || !data.ok) {
+        this.setState({ orderBusy: false });
+        this.flash((data.errors && data.errors[0]) || "We could not place your order.");
+        return;
+      }
+
+      const o = data.order;
+      const invoice = {
+        issued: o.placedOn, issuedTime: o.placedTime,
+        customer: o.customer, phone: o.phone, whatsapp: o.whatsapp,
+        address: o.address, hasEmail: false, email: "",
+        map: o.mapsUrl, hasMap: !!o.mapsUrl && !o.isPickup,
+        method: o.isPickup ? "Self-pickup" : "Local delivery",
+        zoneLine: o.zoneName, date: o.deliveryDate,
+        payment: o.paymentLabel, status: o.paymentStatus,
+        statusColor: o.paymentStatus === "Paid" ? "#17693F" : "#811844",
+        items: o.items.map(i => ({
+          name: i.name,
+          qty: i.qty + (i.qty === 1 ? " pc" : " pcs"),
+          options: [i.options].filter(Boolean).concat(i.note ? ["Note: " + i.note] : []),
+          total: this.money(i.lineTotal)
+        })),
+        note: o.items.map(i => i.note).filter(Boolean).join(" · "),
+        hasNote: o.items.some(i => !!i.note),
+        subtotal: this.money(o.subtotal),
+        discount: this.money(o.discount), hasDiscount: o.discount > 0,
+        delivery: o.isPickup ? "Free" : this.money(o.deliveryFee)
+      };
+
+      this.persist({});
+      this.setState({ orderBusy: false });
+      this.nav("success", {
+        cart:{}, couponOk:false, coupon:"",
+        orderNo: o.orderNo, paid: this.money(o.total), paidDate: o.deliveryDate,
+        invoice, exportNote:""
+      });
+    } catch (e) {
+      this.setState({ orderBusy: false });
+      this.flash("Could not reach the kitchen. Please try again.");
     }
   }
   validateAuth() {
@@ -988,39 +1062,7 @@ class Component extends DCLogic {
         if (!addressOk) { this.flash("Complete the delivery address"); return; }
         if (!localOk || !waOk) { this.flash("Check your phone numbers"); return; }
         if (!s.payment) { this.flash("Choose a payment method"); return; }
-        const no = "DD-" + Math.floor(10000 + Math.random() * 89999);
-        const stamp = new Date();
-        const payLabel = { cod:"Cash", bkash:"bKash", card:"Card" }[s.payment] || "bKash";
-        const invoice = {
-          issued: stamp.toLocaleDateString("en-GB", { day:"numeric", month:"short", year:"numeric" }),
-          issuedTime: stamp.toLocaleTimeString("en-US", { hour:"numeric", minute:"2-digit" }),
-          customer: (s.firstName + " " + s.lastName).trim(),
-          phone: "+880 " + s.localPhone,
-          whatsapp: s.waSame ? "+880 " + s.localPhone : (s.waCode + " " + s.waNumber).trim(),
-          address: s.pickup ? "Self-pickup from " + pickupZone
-            : ([s.house.trim(), s.line1.trim(), s.line2.trim(), s.zone, s.zip.trim() ? "Dhaka " + s.zip.trim() : ""]
-                .filter(Boolean).join(", ") || "—"),
-          hasEmail: false, email: "",
-          map: s.mapsUrl, hasMap: !!s.mapsUrl && !s.pickup,
-          method: s.pickup ? "Self-pickup" : "Local delivery",
-          zoneLine: s.pickup ? pickupZone : (zoneRow ? zoneRow.name : "—"),
-          date: (chosenDate ? prettyDate(chosenDate) : "—"),
-          payment: s.payment === "cod" ? (s.pickup ? "Cash on pickup" : "Cash on delivery") : payLabel,
-          status: s.payment === "cod" ? (s.pickup ? "Due on pickup" : "Due on delivery") : "Paid",
-          statusColor: s.payment === "cod" ? "#811844" : "#17693F",
-          items: lines.map(l => ({
-            name: l.name, qty: l.qty + (l.qty === 1 ? " pc" : " pcs"),
-            options: [l.optionLabel].filter(Boolean).concat(l.note ? ["Note: " + l.note] : []),
-            total: l.lineTotal
-          })),
-          note: lines.map(l => l.note).filter(Boolean).join(" · "),
-          hasNote: lines.some(l => !!l.note),
-          subtotal: this.money(subtotal),
-          discount: this.money(discount), hasDiscount: discount > 0,
-          delivery: s.pickup ? "Free" : this.money(delivery)
-        };
-        this.persist({});
-        this.nav("success", { cart:{}, couponOk:false, coupon:"", orderNo:no, paid:this.money(total), paidDate:(chosenDate ? prettyDate(chosenDate) : "—"), invoice, exportNote:"" });
+        this.submitOrder();
       },
       orderNo: s.orderNo, paidTotal: s.paid, paidDate: s.paidDate || "Tomorrow",
       invoice: s.invoice || {},
@@ -1167,8 +1209,13 @@ class Component extends DCLogic {
         const stageIx = o.status === "Cancelled" ? -1 : Math.max(0, STAGES.indexOf(o.status === "Pending" ? "Order Placed" : o.status));
         return {
           no:o.no, date:o.date, payment:o.payment, status:o.status, statusBg:st.bg, statusFg:st.fg,
-          customer:[s.customerName, s.customerLastName].filter(Boolean).join(" "),
-          phone:s.customerPhone || "", address:o.address, notes:o.notes,
+          // Details as recorded on this order, falling back to the profile
+          // only for older rows that predate the snapshot columns.
+          customer: o.customer || [s.customerName, s.customerLastName].filter(Boolean).join(" "),
+          phone: o.phone || s.customerPhone || "",
+          whatsapp: o.whatsapp || "", email: o.email || "",
+          mapUrl: o.mapUrl || "", hasMap: !!o.mapUrl,
+          address:o.address, notes:o.notes,
           items: o.items.map(i => {
             const p = PRODUCTS.find(x => x.name === i[0]);
             return { name:i[0], qty:i[1], unit:this.money(i[2]), total:this.money(i[1] * i[2]),

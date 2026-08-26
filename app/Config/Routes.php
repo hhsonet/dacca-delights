@@ -18,6 +18,9 @@ $routes->get('signup',                  'Auth::signupPage');
 
 // Auth endpoints. CSRF is not enabled globally in Filters.php, so the state-
 // changing routes opt into it explicitly here.
+// Checkout submission. Totals are recomputed server-side in OrderPlacer.
+$routes->post('order', 'Order::place', ['filter' => 'csrf']);
+
 $routes->get('auth/me',      'Auth::me');
 $routes->get('auth/logout',  'Auth::logout');
 $routes->post('auth/signup', 'Auth::signup', ['filter' => 'csrf']);

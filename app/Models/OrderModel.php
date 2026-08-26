@@ -14,7 +14,9 @@ class OrderModel extends Model
     protected $allowedFields = [
         'order_no', 'customer_id', 'zone_id', 'placed_on', 'delivery_date', 'is_pickup',
         'payment_method', 'payment_status', 'status', 'subtotal', 'discount',
-        'delivery_fee', 'total', 'address', 'notes',
+        'delivery_fee', 'total', 'address', 'map_url', 'notes',
+        // Contact details as given at checkout — see the snapshot migration.
+        'customer_name', 'customer_phone', 'customer_whatsapp', 'customer_email',
     ];
 
     protected $validationRules = [
@@ -29,10 +31,25 @@ class OrderModel extends Model
         'Pending', 'Order Placed', 'Preparing', 'Out for Delivery', 'Delivered', 'Cancelled',
     ];
 
+    /**
+     * The order's own contact snapshot wins; the joined profile is only a
+     * fallback for rows predating that column.
+     */
     public function withCustomer(): \CodeIgniter\Database\BaseBuilder
     {
+        // All-or-nothing: an order that carries its own snapshot uses only its
+        // own fields. Mixing them with the joined profile would show one
+        // person's name beside another's email when a guest order is linked to
+        // an existing customer row.
+        $hasSnapshot = "(o.customer_name IS NOT NULL AND o.customer_name <> '')";
+
         return $this->db->table($this->table . ' o')
-            ->select("o.*, TRIM(CONCAT(COALESCE(c.first_name,''),' ',COALESCE(c.last_name,''))) AS customer_name, c.email AS customer_email, z.name AS zone_name")
+            ->select("o.*,
+                CASE WHEN {$hasSnapshot} THEN o.customer_name
+                     ELSE NULLIF(TRIM(CONCAT(COALESCE(c.first_name,''),' ',COALESCE(c.last_name,''))),'') END AS customer_name,
+                CASE WHEN {$hasSnapshot} THEN o.customer_email ELSE c.email END AS customer_email,
+                CASE WHEN {$hasSnapshot} THEN o.customer_phone ELSE c.phone END AS customer_phone,
+                z.name AS zone_name", false)
             ->join('customers c', 'c.id = o.customer_id', 'left')
             ->join('delivery_zones z', 'z.id = o.zone_id', 'left');
     }
