@@ -1,0 +1,1787 @@
+{
+ "CATS": [
+  "Best Sellers",
+  "Breads",
+  "Croissants",
+  "Sandwiches & Wraps",
+  "Buns & Rolls",
+  "Bagels",
+  "Desserts & Savory Sides",
+  "Tarts & Pastries",
+  "Add ons"
+ ],
+ "CAT_META": {
+  "Breads": {
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "blurb": "Sourdough, baguettes and sandwich loaves, baked through the morning."
+  },
+  "Croissants": {
+   "image": "https://www.daccadelights.com/assets/Items/croissants.jpeg",
+   "blurb": "Laminated over three days. Minimum two pieces per flavour."
+  },
+  "Sandwiches & Wraps": {
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "blurb": "Pitas, bagel sandwiches and burritos, made on our own bread."
+  },
+  "Buns & Rolls": {
+   "image": "https://www.daccadelights.com/assets/Items/roll.jpeg",
+   "blurb": "Burger buns, brioche and rolls by the batch."
+  },
+  "Bagels": {
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "blurb": "Boiled then baked. A minimum of 6 bagels per order is required."
+  },
+  "Desserts & Savory Sides": {
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "blurb": "Brownies, cookies, puffs and Middle Eastern sweets. Minimum 2 brownies per order."
+  },
+  "Tarts & Pastries": {
+   "image": "https://www.daccadelights.com/assets/Items/tart.jpeg",
+   "blurb": "A minimum of 4 pieces of tarts per order is required."
+  },
+  "Add ons": {
+   "image": "https://www.daccadelights.com/assets/Items/add_one.jpeg",
+   "blurb": "Spreads and dips to go with the bread."
+  }
+ },
+ "PRODUCTS": [
+  {
+   "id": 1,
+   "slug": "sandwich-bread",
+   "name": "Sandwich Bread",
+   "note": "~1000 gm",
+   "price": 250,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, milk, butter, sugar, yeast, salt.",
+   "kcal": 270
+  },
+  {
+   "id": 2,
+   "slug": "sourdough-bread",
+   "name": "Sourdough Bread",
+   "note": "~650 gm",
+   "price": 350,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, sourdough culture, sea salt, water.",
+   "kcal": 220
+  },
+  {
+   "id": 3,
+   "slug": "sourdough-bread-whole-wheat",
+   "name": "Sourdough Bread (Whole Wheat)",
+   "note": "~650 gm",
+   "price": 420,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Whole wheat flour, sourdough culture, sea salt, water.",
+   "kcal": 210
+  },
+  {
+   "id": 4,
+   "slug": "baguette",
+   "name": "Baguette",
+   "note": "~400 gm",
+   "price": 300,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, water, sea salt, yeast.",
+   "kcal": 270
+  },
+  {
+   "id": 5,
+   "slug": "mini-baguette",
+   "name": "Mini Baguette",
+   "note": "~200 gm",
+   "price": 300,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, water, sea salt, yeast.",
+   "kcal": 270
+  },
+  {
+   "id": 6,
+   "slug": "milk-bread",
+   "name": "Milk Bread",
+   "note": "~650 gm",
+   "price": 200,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, whole milk, butter, sugar, yeast, salt.",
+   "kcal": 290
+  },
+  {
+   "id": 7,
+   "slug": "premium-brown-bread",
+   "name": "Premium Brown Bread",
+   "note": "~650 gm",
+   "price": 350,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Whole wheat flour, molasses, yeast, salt, water.",
+   "kcal": 235
+  },
+  {
+   "id": 8,
+   "slug": "premium-multigrain-bread",
+   "name": "Premium Multigrain Bread",
+   "note": "~650 gm",
+   "price": 450,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, oats, flax, sunflower and sesame seeds, honey.",
+   "kcal": 255
+  },
+  {
+   "id": 9,
+   "slug": "khobus",
+   "name": "Khobus",
+   "note": "~100 gm · minimum 6 pieces",
+   "price": 40,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, water, salt, yeast.",
+   "kcal": 275
+  },
+  {
+   "id": 10,
+   "slug": "regular-ciabatta",
+   "name": "Regular Ciabatta",
+   "note": "minimum 5 pcs",
+   "price": 80,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, biga starter, olive oil, sea salt.",
+   "kcal": 270
+  },
+  {
+   "id": 11,
+   "slug": "white-ciabatta",
+   "name": "White Ciabatta",
+   "note": "minimum 5 pcs",
+   "price": 80,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, biga starter, olive oil, sea salt.",
+   "kcal": 270
+  },
+  {
+   "id": 12,
+   "slug": "brioche-bread",
+   "name": "Brioche Bread",
+   "note": "~650 gm",
+   "price": 300,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, butter, eggs, milk, sugar, yeast.",
+   "kcal": 340
+  },
+  {
+   "id": 13,
+   "slug": "b-nh-m-hoagie-bread",
+   "name": "Bánh Mì (Hoagie Bread)",
+   "note": "minimum 8 pcs",
+   "price": 60,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, rice flour, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 14,
+   "slug": "potato-brioche-bread",
+   "name": "Potato Brioche Bread",
+   "note": "~650 gm",
+   "price": 330,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, potato, butter, eggs, milk, sugar.",
+   "kcal": 320
+  },
+  {
+   "id": 15,
+   "slug": "muffuletta-sandwich-bread",
+   "name": "Muffuletta Sandwich Bread",
+   "note": "~125 gm · minimum 6 pieces",
+   "price": 100,
+   "isNew": true,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, water, sea salt, yeast.",
+   "kcal": 265
+  },
+  {
+   "id": 16,
+   "slug": "simit",
+   "name": "Simit",
+   "note": "6 pcs",
+   "price": 600,
+   "isNew": false,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, grape molasses, sesame seeds, yeast, salt.",
+   "kcal": 310
+  },
+  {
+   "id": 17,
+   "slug": "multigrain-sourdough-bread",
+   "name": "Multigrain Sourdough Bread",
+   "note": "~650 gm",
+   "price": 450,
+   "isNew": true,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, mixed grains, seeds, sourdough culture, sea salt.",
+   "kcal": 245
+  },
+  {
+   "id": 18,
+   "slug": "multigrain-sourdough-bread-whole-wheat",
+   "name": "Multigrain Sourdough Bread (Whole Wheat)",
+   "note": "~650 gm",
+   "price": 500,
+   "isNew": true,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, water, sea salt, yeast.",
+   "kcal": 265
+  },
+  {
+   "id": 19,
+   "slug": "plain-focaccia",
+   "name": "Plain Focaccia",
+   "note": "",
+   "price": 450,
+   "isNew": true,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, extra virgin olive oil, sea salt, yeast.",
+   "kcal": 300
+  },
+  {
+   "id": 20,
+   "slug": "mixed-herb-focaccia",
+   "name": "Mixed Herb Focaccia",
+   "note": "",
+   "price": 500,
+   "isNew": true,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, olive oil, rosemary, thyme, oregano, sea salt.",
+   "kcal": 305
+  },
+  {
+   "id": 21,
+   "slug": "olive-cheese-sourdough-bread",
+   "name": "Olive Cheese Sourdough Bread",
+   "note": "~650 gm",
+   "price": 550,
+   "isNew": true,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Sourdough culture, green olives, aged cheddar, sea salt.",
+   "kcal": 285
+  },
+  {
+   "id": 22,
+   "slug": "garlic-bread",
+   "name": "Garlic Bread",
+   "note": "~650 gm",
+   "price": 400,
+   "isNew": true,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Baguette dough, garlic butter, parsley, sea salt.",
+   "kcal": 330
+  },
+  {
+   "id": 23,
+   "slug": "olive-cheese-baguette",
+   "name": "Olive Cheese Baguette",
+   "note": "",
+   "price": 350,
+   "isNew": true,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, water, sea salt, yeast.",
+   "kcal": 265
+  },
+  {
+   "id": 24,
+   "slug": "black-pepper-baguette",
+   "name": "Black Pepper Baguette",
+   "note": "",
+   "price": 350,
+   "isNew": true,
+   "cat": "Breads",
+   "image": "https://www.daccadelights.com/assets/Items/Bread.jpeg",
+   "ing": "Bread flour, water, sea salt, yeast.",
+   "kcal": 265
+  },
+  {
+   "id": 25,
+   "slug": "classic-butter-croissant",
+   "name": "Classic Butter Croissant",
+   "note": "minimum 4 pcs",
+   "price": 180,
+   "isNew": true,
+   "cat": "Croissants",
+   "image": "https://www.daccadelights.com/assets/Items/croissants.jpeg",
+   "ing": "Bread flour, French butter, milk, sugar, yeast, salt.",
+   "kcal": 406
+  },
+  {
+   "id": 26,
+   "slug": "cheese-croissant",
+   "name": "Cheese Croissant",
+   "note": "minimum 2 pcs",
+   "price": 350,
+   "isNew": true,
+   "cat": "Croissants",
+   "image": "https://www.daccadelights.com/assets/Items/croissants.jpeg",
+   "ing": "Croissant dough, aged cheddar, emmental, cream.",
+   "kcal": 430
+  },
+  {
+   "id": 27,
+   "slug": "white-choco-croissant",
+   "name": "White Choco Croissant",
+   "note": "minimum 2 pcs",
+   "price": 300,
+   "isNew": true,
+   "cat": "Croissants",
+   "image": "https://www.daccadelights.com/assets/Items/croissants.jpeg",
+   "ing": "Croissant dough, white chocolate, butter, sugar.",
+   "kcal": 455
+  },
+  {
+   "id": 28,
+   "slug": "dark-choco-croissant",
+   "name": "Dark Choco Croissant",
+   "note": "minimum 2 pcs",
+   "price": 300,
+   "isNew": true,
+   "cat": "Croissants",
+   "image": "https://www.daccadelights.com/assets/Items/croissants.jpeg",
+   "ing": "Croissant dough, 62% dark chocolate, butter, sugar.",
+   "kcal": 445
+  },
+  {
+   "id": 29,
+   "slug": "choco-filled-topped-croissant",
+   "name": "Choco-Filled & Topped Croissant",
+   "note": "minimum 2 pcs",
+   "price": 350,
+   "isNew": true,
+   "cat": "Croissants",
+   "image": "https://www.daccadelights.com/assets/Items/croissants.jpeg",
+   "ing": "Bread flour, French butter, milk, sugar, yeast, salt.",
+   "kcal": 406
+  },
+  {
+   "id": 30,
+   "slug": "strawberry-croissant",
+   "name": "Strawberry Croissant",
+   "note": "minimum 2 pcs",
+   "price": 380,
+   "isNew": true,
+   "cat": "Croissants",
+   "image": "https://www.daccadelights.com/assets/Items/croissants.jpeg",
+   "ing": "Croissant dough, strawberry compote, cream, sugar.",
+   "kcal": 420
+  },
+  {
+   "id": 31,
+   "slug": "blueberry-croissant",
+   "name": "Blueberry Croissant",
+   "note": "minimum 2 pcs",
+   "price": 400,
+   "isNew": true,
+   "cat": "Croissants",
+   "image": "https://www.daccadelights.com/assets/Items/croissants.jpeg",
+   "ing": "Croissant dough, blueberry compote, cream, sugar.",
+   "kcal": 420
+  },
+  {
+   "id": 32,
+   "slug": "choco-dipped-croissant",
+   "name": "Choco Dipped Croissant",
+   "note": "minimum 2 pcs",
+   "price": 350,
+   "isNew": true,
+   "cat": "Croissants",
+   "image": "https://www.daccadelights.com/assets/Items/croissants.jpeg",
+   "ing": "Bread flour, French butter, milk, sugar, yeast, salt.",
+   "kcal": 406
+  },
+  {
+   "id": 33,
+   "slug": "double-cheese-beef-bagel-sandwich",
+   "name": "Double Cheese Beef Bagel Sandwich",
+   "note": "minimum 2 pcs",
+   "price": 500,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Bagel, seasoned beef, cheddar, emmental, pickles, mustard mayo.",
+   "kcal": 290
+  },
+  {
+   "id": 34,
+   "slug": "everything-bagel-chicken-sandwich",
+   "name": "Everything Bagel Chicken Sandwich",
+   "note": "minimum 2 pcs",
+   "price": 350,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Everything bagel, grilled chicken, cheddar, lettuce, house mayo.",
+   "kcal": 255
+  },
+  {
+   "id": 35,
+   "slug": "falafel-pita-sandwich",
+   "name": "Falafel Pita Sandwich",
+   "note": "minimum 2 pcs",
+   "price": 300,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Pita, falafel, tahini, tomato, cucumber, pickled turnip.",
+   "kcal": 230
+  },
+  {
+   "id": 36,
+   "slug": "chicken-pita-sandwich",
+   "name": "Chicken Pita Sandwich",
+   "note": "minimum 2 pcs",
+   "price": 380,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Pita, marinated chicken, garlic sauce, lettuce, tomato.",
+   "kcal": 240
+  },
+  {
+   "id": 37,
+   "slug": "beef-pita-sandwich",
+   "name": "Beef Pita Sandwich",
+   "note": "minimum 2 pcs",
+   "price": 480,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Pita, spiced beef, tahini, onion, sumac, parsley.",
+   "kcal": 265
+  },
+  {
+   "id": 38,
+   "slug": "mushroom-pita-sandwich",
+   "name": "Mushroom Pita Sandwich",
+   "note": "minimum 2 pcs",
+   "price": 430,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Baked bread, seasoned filling, fresh vegetables, house sauce.",
+   "kcal": 245
+  },
+  {
+   "id": 39,
+   "slug": "arabian-delight-combo",
+   "name": "Arabian Delight Combo",
+   "note": "1 portion each of Mushroom, Falafel, Chicken & Beef Pita Sandwich, Hummus, Tahini, Labneh",
+   "price": 2150,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Baked bread, seasoned filling, fresh vegetables, house sauce.",
+   "kcal": 245
+  },
+  {
+   "id": 40,
+   "slug": "mushroom-bagel-sandwich",
+   "name": "Mushroom Bagel Sandwich",
+   "note": "minimum 2 pcs",
+   "price": 450,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Baked bread, seasoned filling, fresh vegetables, house sauce.",
+   "kcal": 245
+  },
+  {
+   "id": 41,
+   "slug": "bagel-sandwich-combo",
+   "name": "Bagel Sandwich Combo",
+   "note": "1 pc each of Everything Bagel Chicken, Double Cheese Beef & Mushroom Bagel Sandwich",
+   "price": 1250,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Baked bread, seasoned filling, fresh vegetables, house sauce.",
+   "kcal": 245
+  },
+  {
+   "id": 42,
+   "slug": "chicken-burrito",
+   "name": "Chicken Burrito",
+   "note": "minimum 2 pcs",
+   "price": 500,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Baked bread, seasoned filling, fresh vegetables, house sauce.",
+   "kcal": 245
+  },
+  {
+   "id": 43,
+   "slug": "mushroom-burrito",
+   "name": "Mushroom Burrito",
+   "note": "minimum 2 pcs",
+   "price": 580,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Baked bread, seasoned filling, fresh vegetables, house sauce.",
+   "kcal": 245
+  },
+  {
+   "id": 44,
+   "slug": "chicken-mushroom-burrito",
+   "name": "Chicken Mushroom Burrito",
+   "note": "minimum 2 pcs",
+   "price": 550,
+   "isNew": true,
+   "cat": "Sandwiches & Wraps",
+   "image": "https://www.daccadelights.com/assets/Items/wraps.jpeg",
+   "ing": "Baked bread, seasoned filling, fresh vegetables, house sauce.",
+   "kcal": 245
+  },
+  {
+   "id": 45,
+   "slug": "burger-bun",
+   "name": "Burger Bun",
+   "note": "~90 gm · minimum 6 pieces",
+   "price": 50,
+   "isNew": false,
+   "cat": "Buns & Rolls",
+   "image": "https://www.daccadelights.com/assets/Items/roll.jpeg",
+   "ing": "Bread flour, milk, butter, sugar, yeast, salt.",
+   "kcal": 285
+  },
+  {
+   "id": 46,
+   "slug": "brioche-burger-bun",
+   "name": "Brioche Burger Bun",
+   "note": "~90 gm · minimum 6 pieces",
+   "price": 65,
+   "isNew": false,
+   "cat": "Buns & Rolls",
+   "image": "https://www.daccadelights.com/assets/Items/roll.jpeg",
+   "ing": "Bread flour, butter, eggs, milk, sugar, sesame seeds.",
+   "kcal": 310
+  },
+  {
+   "id": 47,
+   "slug": "mini-burger-bun",
+   "name": "Mini Burger Bun",
+   "note": "~35 gm · minimum 12 pieces",
+   "price": 35,
+   "isNew": false,
+   "cat": "Buns & Rolls",
+   "image": "https://www.daccadelights.com/assets/Items/roll.jpeg",
+   "ing": "Bread flour, milk, butter, sugar, yeast, salt.",
+   "kcal": 290
+  },
+  {
+   "id": 48,
+   "slug": "sourdough-bun",
+   "name": "Sourdough Bun",
+   "note": "~90 gm · minimum 10 pieces",
+   "price": 65,
+   "isNew": false,
+   "cat": "Buns & Rolls",
+   "image": "https://www.daccadelights.com/assets/Items/roll.jpeg",
+   "ing": "Bread flour, milk, butter, sugar, yeast, salt.",
+   "kcal": 290
+  },
+  {
+   "id": 49,
+   "slug": "brioche-roll",
+   "name": "Brioche Roll",
+   "note": "~90 gm · minimum 6 pieces",
+   "price": 60,
+   "isNew": false,
+   "cat": "Buns & Rolls",
+   "image": "https://www.daccadelights.com/assets/Items/roll.jpeg",
+   "ing": "Bread flour, milk, butter, sugar, yeast, salt.",
+   "kcal": 290
+  },
+  {
+   "id": 50,
+   "slug": "hot-cross-bun",
+   "name": "Hot Cross Bun",
+   "note": "minimum 6 pieces",
+   "price": 85,
+   "isNew": false,
+   "cat": "Buns & Rolls",
+   "image": "https://www.daccadelights.com/assets/Items/roll.jpeg",
+   "ing": "Bread flour, currants, mixed spice, citrus peel, butter.",
+   "kcal": 300
+  },
+  {
+   "id": 51,
+   "slug": "muffuletta-bun",
+   "name": "Muffuletta Bun",
+   "note": "600+ gm",
+   "price": 485,
+   "isNew": false,
+   "cat": "Buns & Rolls",
+   "image": "https://www.daccadelights.com/assets/Items/roll.jpeg",
+   "ing": "Bread flour, milk, butter, sugar, yeast, salt.",
+   "kcal": 290
+  },
+  {
+   "id": 52,
+   "slug": "cinnamon-raisin-bagel",
+   "name": "Cinnamon Raisin Bagel",
+   "note": "~90 gm",
+   "price": 95,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, cinnamon, raisins, brown sugar, malt syrup.",
+   "kcal": 280
+  },
+  {
+   "id": 53,
+   "slug": "plain-bagel",
+   "name": "Plain Bagel",
+   "note": "~90 gm",
+   "price": 80,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 54,
+   "slug": "sesame-bagel",
+   "name": "Sesame Bagel",
+   "note": "~90 gm",
+   "price": 80,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, sesame seeds, malt syrup, salt.",
+   "kcal": 270
+  },
+  {
+   "id": 55,
+   "slug": "mixed-seed-bagel",
+   "name": "Mixed Seed Bagel",
+   "note": "~90 gm",
+   "price": 90,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 56,
+   "slug": "chia-bagel",
+   "name": "Chia Bagel",
+   "note": "~90 gm",
+   "price": 90,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 57,
+   "slug": "cheese-bagel",
+   "name": "Cheese Bagel",
+   "note": "~90 gm",
+   "price": 100,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, aged cheddar, malt syrup, salt.",
+   "kcal": 295
+  },
+  {
+   "id": 58,
+   "slug": "black-sesame-bagel",
+   "name": "Black Sesame Bagel",
+   "note": "~90 gm",
+   "price": 95,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 59,
+   "slug": "bagel-bunch",
+   "name": "Bagel Bunch",
+   "note": "1 piece each of Plain, Sesame, Mixed Seed, Cheese, Chia and Black Sesame",
+   "price": 500,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 60,
+   "slug": "garlic-herb-bagel",
+   "name": "Garlic Herb Bagel",
+   "note": "~90 gm",
+   "price": 120,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 61,
+   "slug": "everything-bagel",
+   "name": "Everything Bagel",
+   "note": "~90 gm",
+   "price": 150,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, sesame, poppy seed, dried garlic and onion, malt syrup.",
+   "kcal": 265
+  },
+  {
+   "id": 62,
+   "slug": "chili-garlic-bagel",
+   "name": "Chili Garlic Bagel",
+   "note": "~90 gm",
+   "price": 120,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 63,
+   "slug": "krak-w-bagel",
+   "name": "Kraków Bagel",
+   "note": "~90 gm",
+   "price": 120,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 64,
+   "slug": "jerusalem-bagel",
+   "name": "Jerusalem Bagel",
+   "note": "~90 gm · minimum 2 pieces",
+   "price": 180,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 65,
+   "slug": "jalape-o-cheese-bagels",
+   "name": "Jalapeño Cheese Bagels",
+   "note": "~90 gm",
+   "price": 150,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, jalapeño, aged cheddar, malt syrup.",
+   "kcal": 290
+  },
+  {
+   "id": 66,
+   "slug": "za-atar-bagel",
+   "name": "Za'atar Bagel",
+   "note": "~90 gm",
+   "price": 150,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, za'atar, olive oil, sesame, sumac.",
+   "kcal": 275
+  },
+  {
+   "id": 67,
+   "slug": "hot-honey-bagel",
+   "name": "Hot Honey Bagel",
+   "note": "~90 gm",
+   "price": 100,
+   "isNew": true,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 68,
+   "slug": "bagel-bunch-2-0",
+   "name": "Bagel Bunch 2.0",
+   "note": "2 pieces each of Chili Garlic, Garlic Herb and Everything Bagel",
+   "price": 750,
+   "isNew": false,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 69,
+   "slug": "whole-wheat-bagel-bunch",
+   "name": "Whole Wheat Bagel Bunch",
+   "note": "1 piece each of whole wheat Plain, Sesame, Mixed Seed, Cheese, Chia and Black Sesame",
+   "price": 550,
+   "isNew": true,
+   "cat": "Bagels",
+   "image": "https://www.daccadelights.com/assets/Items/Bagels.jpeg",
+   "ing": "High-gluten flour, malt syrup, water, salt, yeast.",
+   "kcal": 260
+  },
+  {
+   "id": 70,
+   "slug": "arabian-khalid-al-nahal",
+   "name": "Arabian Khalid Al Nahal",
+   "note": "",
+   "price": 1000,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Flour, butter, eggs, sugar.",
+   "kcal": 395
+  },
+  {
+   "id": 71,
+   "slug": "chocolate-brownie",
+   "name": "Chocolate Brownie",
+   "note": "minimum 2 pieces",
+   "price": 115,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Dark cocoa, unsalted butter, eggs, sugar, flour, espresso.",
+   "kcal": 440
+  },
+  {
+   "id": 72,
+   "slug": "chocolate-peanut-crunch-brownie",
+   "name": "Chocolate Peanut Crunch Brownie",
+   "note": "minimum 2 pieces",
+   "price": 130,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Dark cocoa, butter, eggs, roasted peanuts, sugar, flour.",
+   "kcal": 470
+  },
+  {
+   "id": 73,
+   "slug": "chocolate-chunk-cookie",
+   "name": "Chocolate Chunk Cookie",
+   "note": "~50 gm · minimum 10 pieces",
+   "price": 75,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Butter, brown sugar, eggs, flour, 62% chocolate chunks.",
+   "kcal": 480
+  },
+  {
+   "id": 74,
+   "slug": "oatmeal-cookie",
+   "name": "Oatmeal Cookie",
+   "note": "~25 gm · minimum 10 pieces",
+   "price": 65,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Rolled oats, butter, brown sugar, eggs, flour, cinnamon.",
+   "kcal": 430
+  },
+  {
+   "id": 75,
+   "slug": "pumpkin-spice-muffin",
+   "name": "Pumpkin Spice Muffin",
+   "note": "minimum 4 pieces",
+   "price": 65,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Pumpkin purée, flour, eggs, sugar, cinnamon, nutmeg.",
+   "kcal": 350
+  },
+  {
+   "id": 76,
+   "slug": "carrot-cheese-muffin",
+   "name": "Carrot Cheese Muffin",
+   "note": "minimum 4 pieces",
+   "price": 65,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Carrot, cream cheese, flour, eggs, sugar, cinnamon.",
+   "kcal": 365
+  },
+  {
+   "id": 77,
+   "slug": "brookie",
+   "name": "Brookie",
+   "note": "minimum 4 pieces",
+   "price": 130,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Flour, butter, eggs, sugar.",
+   "kcal": 395
+  },
+  {
+   "id": 78,
+   "slug": "premium-chocolate-chunk-cookie",
+   "name": "Premium Chocolate Chunk Cookie",
+   "note": "minimum 6 pieces",
+   "price": 100,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Flour, butter, eggs, sugar.",
+   "kcal": 395
+  },
+  {
+   "id": 79,
+   "slug": "falafel",
+   "name": "Falafel",
+   "note": "minimum 12 pieces",
+   "price": 500,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Chickpeas, parsley, coriander, garlic, cumin, sesame.",
+   "kcal": 330
+  },
+  {
+   "id": 80,
+   "slug": "carrot-halwa",
+   "name": "Carrot Halwa",
+   "note": "",
+   "price": 190,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Carrot, whole milk, ghee, sugar, cardamom, nuts.",
+   "kcal": 250
+  },
+  {
+   "id": 81,
+   "slug": "shahi-tukra",
+   "name": "Shahi Tukra",
+   "note": "1:2",
+   "price": 400,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Flour, butter, eggs, sugar.",
+   "kcal": 395
+  },
+  {
+   "id": 82,
+   "slug": "cheese-kunafa",
+   "name": "Cheese Kunafa",
+   "note": "~140 gm · minimum 2 pcs",
+   "price": 200,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Kunafa pastry, akkawi cheese, ghee, sugar syrup, pistachio.",
+   "kcal": 420
+  },
+  {
+   "id": 83,
+   "slug": "chicken-puff",
+   "name": "Chicken Puff",
+   "note": "minimum 2 pcs · choose spicy or creamy",
+   "price": 200,
+   "isNew": true,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Flour, butter, eggs, sugar.",
+   "kcal": 395
+  },
+  {
+   "id": 84,
+   "slug": "mini-chicken-puff",
+   "name": "Mini Chicken Puff",
+   "note": "minimum 20 pcs · choose spicy or creamy",
+   "price": 70,
+   "isNew": true,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Flour, butter, eggs, sugar.",
+   "kcal": 395
+  },
+  {
+   "id": 85,
+   "slug": "aflatun",
+   "name": "Aflatun",
+   "note": "",
+   "price": 550,
+   "isNew": false,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Flour, butter, eggs, sugar.",
+   "kcal": 395
+  },
+  {
+   "id": 86,
+   "slug": "om-ali",
+   "name": "Om Ali",
+   "note": "1:2",
+   "price": 400,
+   "isNew": true,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Flour, butter, eggs, sugar.",
+   "kcal": 395
+  },
+  {
+   "id": 87,
+   "slug": "mushroom-puff",
+   "name": "Mushroom Puff",
+   "note": "minimum 2 pcs",
+   "price": 280,
+   "isNew": true,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Flour, butter, eggs, sugar.",
+   "kcal": 395
+  },
+  {
+   "id": 88,
+   "slug": "beef-puff",
+   "name": "Beef Puff",
+   "note": "minimum 2 pcs",
+   "price": 300,
+   "isNew": true,
+   "cat": "Desserts & Savory Sides",
+   "image": "https://www.daccadelights.com/assets/Items/muffin.jpeg",
+   "ing": "Flour, butter, eggs, sugar.",
+   "kcal": 395
+  },
+  {
+   "id": 89,
+   "slug": "hokkaido-cheese-tart",
+   "name": "Hokkaido Cheese Tart",
+   "note": "minimum 4 pieces",
+   "price": 125,
+   "isNew": false,
+   "cat": "Tarts & Pastries",
+   "image": "https://www.daccadelights.com/assets/Items/tart.jpeg",
+   "ing": "Butter pastry, cream cheese, mascarpone, milk, sugar.",
+   "kcal": 345
+  },
+  {
+   "id": 90,
+   "slug": "egg-tart",
+   "name": "Egg Tart",
+   "note": "minimum 4 pieces",
+   "price": 120,
+   "isNew": false,
+   "cat": "Tarts & Pastries",
+   "image": "https://www.daccadelights.com/assets/Items/tart.jpeg",
+   "ing": "Butter pastry, eggs, milk, cream, sugar.",
+   "kcal": 300
+  },
+  {
+   "id": 91,
+   "slug": "chocolate-cheese-tart",
+   "name": "Chocolate Cheese Tart",
+   "note": "minimum 4 pieces",
+   "price": 125,
+   "isNew": false,
+   "cat": "Tarts & Pastries",
+   "image": "https://www.daccadelights.com/assets/Items/tart.jpeg",
+   "ing": "Butter pastry, cream cheese, dark chocolate, cream.",
+   "kcal": 380
+  },
+  {
+   "id": 92,
+   "slug": "custard-tart",
+   "name": "Custard Tart",
+   "note": "minimum 4 pieces",
+   "price": 120,
+   "isNew": false,
+   "cat": "Tarts & Pastries",
+   "image": "https://www.daccadelights.com/assets/Items/tart.jpeg",
+   "ing": "Butter pastry, milk, eggs, vanilla, nutmeg, sugar.",
+   "kcal": 295
+  },
+  {
+   "id": 93,
+   "slug": "lemon-tart",
+   "name": "Lemon Tart",
+   "note": "minimum 4 pieces",
+   "price": 150,
+   "isNew": false,
+   "cat": "Tarts & Pastries",
+   "image": "https://www.daccadelights.com/assets/Items/tart.jpeg",
+   "ing": "Butter pastry, lemon curd, eggs, cream, sugar.",
+   "kcal": 320
+  },
+  {
+   "id": 94,
+   "slug": "apple-tart",
+   "name": "Apple Tart",
+   "note": "minimum 4 pieces",
+   "price": 150,
+   "isNew": false,
+   "cat": "Tarts & Pastries",
+   "image": "https://www.daccadelights.com/assets/Items/tart.jpeg",
+   "ing": "Butter pastry, apple, cinnamon, sugar, butter.",
+   "kcal": 275
+  },
+  {
+   "id": 95,
+   "slug": "apple-turnover",
+   "name": "Apple Turnover",
+   "note": "minimum 2 pcs",
+   "price": 250,
+   "isNew": true,
+   "cat": "Tarts & Pastries",
+   "image": "https://www.daccadelights.com/assets/Items/tart.jpeg",
+   "ing": "Butter pastry shell, cream, eggs, sugar.",
+   "kcal": 330
+  },
+  {
+   "id": 96,
+   "slug": "pineapple-turnover",
+   "name": "Pineapple Turnover",
+   "note": "minimum 2 pcs",
+   "price": 250,
+   "isNew": true,
+   "cat": "Tarts & Pastries",
+   "image": "https://www.daccadelights.com/assets/Items/tart.jpeg",
+   "ing": "Butter pastry shell, cream, eggs, sugar.",
+   "kcal": 330
+  },
+  {
+   "id": 97,
+   "slug": "past-is-de-nata",
+   "name": "Pastéis de Nata",
+   "note": "minimum 4 pcs",
+   "price": 150,
+   "isNew": true,
+   "cat": "Tarts & Pastries",
+   "image": "https://www.daccadelights.com/assets/Items/tart.jpeg",
+   "ing": "Puff pastry, cream, egg yolk, sugar, cinnamon, lemon.",
+   "kcal": 340
+  },
+  {
+   "id": 98,
+   "slug": "turkish-chicken-puff",
+   "name": "Turkish Chicken Puff",
+   "note": "with creamy béchamel sauce · minimum 2 pcs",
+   "price": 250,
+   "isNew": true,
+   "cat": "Tarts & Pastries",
+   "image": "https://www.daccadelights.com/assets/Items/tart.jpeg",
+   "ing": "Butter pastry shell, cream, eggs, sugar.",
+   "kcal": 330
+  },
+  {
+   "id": 99,
+   "slug": "hummus",
+   "name": "Hummus",
+   "note": "~200 gm",
+   "price": 400,
+   "isNew": false,
+   "cat": "Add ons",
+   "image": "https://www.daccadelights.com/assets/Items/add_one.jpeg",
+   "ing": "Chickpeas, tahini, olive oil, lemon, garlic, cumin.",
+   "kcal": 215
+  },
+  {
+   "id": 100,
+   "slug": "tahini",
+   "name": "Tahini",
+   "note": "~200 gm",
+   "price": 380,
+   "isNew": false,
+   "cat": "Add ons",
+   "image": "https://www.daccadelights.com/assets/Items/add_one.jpeg",
+   "ing": "Stone-ground sesame seeds, sea salt.",
+   "kcal": 595
+  },
+  {
+   "id": 101,
+   "slug": "hazelnut-cheese-spread",
+   "name": "Hazelnut Cheese Spread",
+   "note": "~140 gm",
+   "price": 390,
+   "isNew": false,
+   "cat": "Add ons",
+   "image": "https://www.daccadelights.com/assets/Items/add_one.jpeg",
+   "ing": "Cream cheese, roasted hazelnut, sugar, cocoa butter.",
+   "kcal": 410
+  },
+  {
+   "id": 102,
+   "slug": "cream-cheese-spread",
+   "name": "Cream Cheese Spread",
+   "note": "~140 gm",
+   "price": 250,
+   "isNew": false,
+   "cat": "Add ons",
+   "image": "https://www.daccadelights.com/assets/Items/add_one.jpeg",
+   "ing": "Cream cheese, cultured cream, sea salt.",
+   "kcal": 340
+  },
+  {
+   "id": 103,
+   "slug": "labneh",
+   "name": "Labneh",
+   "note": "~200 gm",
+   "price": 380,
+   "isNew": true,
+   "cat": "Add ons",
+   "image": "https://www.daccadelights.com/assets/Items/add_one.jpeg",
+   "ing": "Strained yoghurt, olive oil, sea salt.",
+   "kcal": 150
+  },
+  {
+   "id": 104,
+   "slug": "mediterranean-trio",
+   "name": "Mediterranean Trio",
+   "note": "200 gm each of Labneh, Hummus & Tahini",
+   "price": 1050,
+   "isNew": true,
+   "cat": "Add ons",
+   "image": "https://www.daccadelights.com/assets/Items/add_one.jpeg",
+   "ing": "Labneh, hummus and tahini — chickpeas, sesame, yoghurt, olive oil.",
+   "kcal": 290
+  },
+  {
+   "id": 105,
+   "slug": "philadelphia-cream-cheese-spread",
+   "name": "Philadelphia Cream Cheese Spread",
+   "note": "~140 gm",
+   "price": 400,
+   "isNew": true,
+   "cat": "Add ons",
+   "image": "https://www.daccadelights.com/assets/Items/add_one.jpeg",
+   "ing": "Chickpeas, sesame, olive oil, lemon, garlic.",
+   "kcal": 215
+  }
+ ],
+ "ZONES": [
+  {
+   "name": "Adabor",
+   "fee": 130
+  },
+  {
+   "name": "Agargaon",
+   "fee": 100
+  },
+  {
+   "name": "Airport",
+   "fee": 150
+  },
+  {
+   "name": "Badda",
+   "fee": 150
+  },
+  {
+   "name": "Banani",
+   "fee": 60
+  },
+  {
+   "name": "Bangshal",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Baridhara Diplomatic Zone",
+   "fee": 60
+  },
+  {
+   "name": "Baridhara DOHS",
+   "fee": 100
+  },
+  {
+   "name": "Bashundhara R/A",
+   "fee": 130
+  },
+  {
+   "name": "Bhashantek",
+   "fee": 150
+  },
+  {
+   "name": "Bhatara",
+   "fee": 150
+  },
+  {
+   "name": "Chawkbazar",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Dakshinkhan",
+   "fee": 150
+  },
+  {
+   "name": "Darus Salam",
+   "fee": 150
+  },
+  {
+   "name": "Demra",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Dhaka Cantonment",
+   "fee": 60
+  },
+  {
+   "name": "Dhanmondi",
+   "fee": 150
+  },
+  {
+   "name": "Gendaria",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Gulshan",
+   "fee": 60
+  },
+  {
+   "name": "Hazaribagh",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Jatrabari",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Kadamtali",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Kafrul",
+   "fee": 150
+  },
+  {
+   "name": "Kalabagan",
+   "fee": 150
+  },
+  {
+   "name": "Kamrangirchar",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Kazipara",
+   "fee": 100
+  },
+  {
+   "name": "Khilgaon",
+   "fee": 150
+  },
+  {
+   "name": "Khilkhet",
+   "fee": 150
+  },
+  {
+   "name": "Kollyanpur",
+   "fee": 120
+  },
+  {
+   "name": "Kotwali",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Lalbagh",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Mirpur (all areas except Mirpur DOHS)",
+   "fee": 120
+  },
+  {
+   "name": "Mirpur DOHS",
+   "fee": 150
+  },
+  {
+   "name": "Mohakhali DOHS",
+   "fee": 100
+  },
+  {
+   "name": "Mohammadpur",
+   "fee": 130
+  },
+  {
+   "name": "Motijheel",
+   "fee": 150
+  },
+  {
+   "name": "Mugda",
+   "fee": 150
+  },
+  {
+   "name": "New Market",
+   "fee": 150
+  },
+  {
+   "name": "Niketan",
+   "fee": 80
+  },
+  {
+   "name": "Pallabi",
+   "fee": 150
+  },
+  {
+   "name": "Paltan",
+   "fee": 150
+  },
+  {
+   "name": "Ramna",
+   "fee": 150
+  },
+  {
+   "name": "Rampura",
+   "fee": 150
+  },
+  {
+   "name": "Rupnagar",
+   "fee": 150
+  },
+  {
+   "name": "Sabujbagh",
+   "fee": 150
+  },
+  {
+   "name": "Shah Ali",
+   "fee": 150
+  },
+  {
+   "name": "Shahbagh",
+   "fee": 150
+  },
+  {
+   "name": "Sher-e-Bangla Nagar",
+   "fee": 150
+  },
+  {
+   "name": "Shewrapara",
+   "fee": 80
+  },
+  {
+   "name": "Shyamoli",
+   "fee": 120
+  },
+  {
+   "name": "Shyampur",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Sutrapur",
+   "fee": 200,
+   "limited": true
+  },
+  {
+   "name": "Tejgaon",
+   "fee": 150
+  },
+  {
+   "name": "Tejgaon Industrial Area",
+   "fee": 150
+  },
+  {
+   "name": "Turag",
+   "fee": 150
+  },
+  {
+   "name": "Uttara East",
+   "fee": 150
+  },
+  {
+   "name": "Uttara West",
+   "fee": 150
+  },
+  {
+   "name": "Uttarkhan",
+   "fee": 150
+  },
+  {
+   "name": "Vatara",
+   "fee": 150
+  },
+  {
+   "name": "Wari",
+   "fee": 200,
+   "limited": true
+  }
+ ],
+ "COD_ZONES": [
+  "Dhaka Cantonment",
+  "Gulshan",
+  "Banani",
+  "Baridhara Diplomatic Zone",
+  "Baridhara DOHS"
+ ],
+ "ORDERS": [
+  {
+   "no": "#BK-1024",
+   "date": "August 20, 2026",
+   "payment": "Cash on Delivery",
+   "status": "Preparing",
+   "discount": 0,
+   "items": [
+    [
+     "Sourdough Bread",
+     1,
+     350
+    ],
+    [
+     "Classic Butter Croissant",
+     4,
+     180
+    ],
+    [
+     "Lemon Tart",
+     4,
+     150
+    ]
+   ],
+   "address": "House 42, Road 7, Dhanmondi, Dhaka 1205",
+   "notes": "Please call on arrival, 4th floor."
+  },
+  {
+   "no": "#BK-1023",
+   "date": "August 18, 2026",
+   "payment": "bKash",
+   "status": "Out for Delivery",
+   "discount": 100,
+   "items": [
+    [
+     "Everything Bagel",
+     6,
+     150
+    ],
+    [
+     "Cream Cheese Spread",
+     1,
+     250
+    ]
+   ],
+   "address": "Flat 5B, Road 11, Banani, Dhaka 1213",
+   "notes": "Leave with reception."
+  },
+  {
+   "no": "#BK-1021",
+   "date": "August 15, 2026",
+   "payment": "Cash on Delivery",
+   "status": "Delivered",
+   "discount": 0,
+   "items": [
+    [
+     "Bagel Bunch 2.0",
+     1,
+     750
+    ],
+    [
+     "Chocolate Brownie",
+     2,
+     115
+    ],
+    [
+     "Hummus",
+     1,
+     400
+    ]
+   ],
+   "address": "House 42, Road 7, Dhanmondi, Dhaka 1205",
+   "notes": "—"
+  },
+  {
+   "no": "#BK-1018",
+   "date": "August 9, 2026",
+   "payment": "Cash on Delivery",
+   "status": "Pending",
+   "discount": 0,
+   "items": [
+    [
+     "Mediterranean Trio",
+     1,
+     1050
+    ],
+    [
+     "Khobus",
+     6,
+     40
+    ]
+   ],
+   "address": "House 42, Road 7, Dhanmondi, Dhaka 1205",
+   "notes": "Iftar delivery, before 5pm."
+  },
+  {
+   "no": "#BK-1012",
+   "date": "July 30, 2026",
+   "payment": "bKash",
+   "status": "Delivered",
+   "discount": 150,
+   "items": [
+    [
+     "Multigrain Sourdough Bread",
+     2,
+     450
+    ],
+    [
+     "Cheese Kunafa",
+     2,
+     200
+    ]
+   ],
+   "address": "Flat 5B, Road 11, Banani, Dhaka 1213",
+   "notes": "—"
+  },
+  {
+   "no": "#BK-1007",
+   "date": "July 22, 2026",
+   "payment": "Cash on Delivery",
+   "status": "Cancelled",
+   "discount": 0,
+   "items": [
+    [
+     "Simit",
+     1,
+     600
+    ]
+   ],
+   "address": "House 42, Road 7, Dhanmondi, Dhaka 1205",
+   "notes": "Customer rescheduled."
+  }
+ ],
+ "TESTIMONIALS": [
+  {
+   "name": "AKM Khan",
+   "stars": "★★★★★",
+   "quote": "I haven't been to their outlet but order for home delivery regularly. I am amazed by the quality of some of their items. The Bagels, Brioche buns, Brown bread etc are fantastic. I wish them all the best!",
+   "item": "Google review"
+  },
+  {
+   "name": "Sarah Ahmed",
+   "stars": "★★★★★",
+   "quote": "The sourdough turned up warm at eight in the morning and the crust actually crackled. I order it every week now.",
+   "item": "Sourdough Bread"
+  },
+  {
+   "name": "Adnan Chowdhury",
+   "stars": "★★★★★",
+   "quote": "Properly laminated croissants — you can hear them. Closest thing to Paris I have found in Dhaka.",
+   "item": "Classic Butter Croissant"
+  },
+  {
+   "name": "Arif Rahman",
+   "stars": "★★★★★",
+   "quote": "Ordered the bagel bunch for a family brunch. Boiled, chewy, nothing like the soft bread rings elsewhere.",
+   "item": "Bagel Bunch"
+  },
+  {
+   "name": "Rezia Karim",
+   "stars": "★★★★☆",
+   "quote": "Lovely tarts and very careful packaging. Would love a few more whole wheat options.",
+   "item": "Lemon Tart"
+  },
+  {
+   "name": "Sumaiya Islam",
+   "stars": "★★★★★",
+   "quote": "They bake to order and you can taste it. The kunafa and the Arabian combo were the hit of Iftar.",
+   "item": "Cheese Kunafa"
+  }
+ ],
+ "GALLERY": [
+  {
+   "src": "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?auto=format&fit=crop&w=600&q=70",
+   "alt": "Pastry display",
+   "span": 2
+  },
+  {
+   "src": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=70",
+   "alt": "Bakery interior",
+   "span": 1
+  },
+  {
+   "src": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=70",
+   "alt": "Baking process",
+   "span": 1
+  },
+  {
+   "src": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=70",
+   "alt": "Coffee",
+   "span": 2
+  },
+  {
+   "src": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=70",
+   "alt": "Fresh bread",
+   "span": 1
+  },
+  {
+   "src": "https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=600&q=70",
+   "alt": "Doughnuts",
+   "span": 1
+  }
+ ],
+ "ITEM_MOQ": {
+  "Jerusalem Bagel": 2,
+  "Cinnamon Raisin Bagel": 6,
+  "Chicken Puff": 2,
+  "Mini Chicken Puff": 20
+ },
+ "BAGEL_POOL_MOQ": 6,
+ "FEATURED": [
+  "Classic Butter Croissant",
+  "Sourdough Bread",
+  "Everything Bagel",
+  "Chocolate Brownie"
+ ]
+}
