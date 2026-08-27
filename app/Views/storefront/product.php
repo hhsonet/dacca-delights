@@ -5,13 +5,19 @@
       <button onClick="{{ goMenu }}" style="background:none; border:0; padding:0 0 18px; cursor:pointer; font-size:13px; color:#75666B" style-hover="color:#561530">← Back to menu</button>
       <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(20px,4vw,48px)">
         <div style="display:flex; flex-direction:column; gap:12px">
-          <div style="aspect-ratio:1/1; border-radius:28px; overflow:hidden; background:#F3E7D6">
+          <div style="position:relative; aspect-ratio:1/1; border-radius:28px; overflow:hidden; background:#F3E7D6">
             <img src="{{ detail.image }}" srcSet="{{ detail.imageSet }}" alt="{{ detail.name }}" loading="lazy" decoding="async" sizes="{{ detail.imageSizes }}" onError="{{ onImgError }}" style="width:100%; height:100%; object-fit:cover; display:block">
+            <sc-if value="{{ detail.showOrigin }}" hint-placeholder-val="{{ false }}">
+              <span title="{{ detail.originTitle }}" style="position:absolute; right:14px; bottom:14px; background:{{ detail.originBg }}; color:#FFFFFF; font-size:11px; font-weight:700; border-radius:999px; padding:6px 13px">{{ detail.originLabel }}</span>
+            </sc-if>
           </div>
           <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px">
             <sc-for list="{{ detail.thumbs }}" as="t" hint-placeholder-count="3">
-              <button onClick="{{ t.select }}" aria-label="{{ t.alt }}" style="aspect-ratio:1/1; border-radius:14px; overflow:hidden; background:#F3E7D6; padding:0; cursor:pointer; display:block; border:2px solid {{ t.border }}; transition:border-color 160ms ease">
+              <button onClick="{{ t.select }}" aria-label="{{ t.alt }}" style="position:relative; aspect-ratio:1/1; border-radius:14px; overflow:hidden; background:#F3E7D6; padding:0; cursor:pointer; display:block; border:2px solid {{ t.border }}; transition:border-color 160ms ease">
                 <img src="{{ t.src }}" srcSet="{{ t.set }}" alt="{{ t.alt }}" loading="lazy" decoding="async" sizes="{{ t.sizes }}" onError="{{ onImgError }}" style="width:100%; height:100%; object-fit:cover; display:block">
+                <sc-if value="{{ t.showOrigin }}" hint-placeholder-val="{{ false }}">
+                  <span title="{{ t.originTitle }}" style="position:absolute; right:4px; bottom:4px; background:{{ t.originBg }}; color:#FFFFFF; font-size:8.5px; font-weight:700; border-radius:999px; padding:2px 6px">{{ t.originLabel }}</span>
+                </sc-if>
               </button>
             </sc-for>
           </div>

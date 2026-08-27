@@ -19,10 +19,29 @@
     <div class="empty">No products match.</div>
   <?php else: ?>
   <div class="tablewrap"><table>
-    <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Min</th><th>Flags</th><th></th></tr></thead>
+    <thead><tr><th>Photo</th><th>Code</th><th>Name</th><th>Category</th><th>Price</th><th>Min</th><th>Flags</th><th></th></tr></thead>
     <tbody>
-    <?php foreach ($rows as $p): ?>
+    <?php foreach ($rows as $p):
+      $ph = $primary[(int) $p['id']] ?? null;
+    ?>
       <tr>
+        <td style="width:56px">
+          <?php if ($ph): $isAi = $ph['is_ai']; ?>
+            <span style="position:relative;display:block;width:44px;height:44px">
+              <img src="<?= esc(base_url('uploads/products/' . $ph['path'])) ?>" alt="" loading="lazy"
+                   style="width:44px;height:44px;border-radius:10px;object-fit:cover;display:block">
+              <span title="<?= $isAi ? 'AI-generated image' : 'Real photograph' ?>"
+                    style="position:absolute;right:-4px;bottom:-4px;width:17px;height:17px;border-radius:999px;
+                           border:2px solid #fff;display:flex;align-items:center;justify-content:center;
+                           font-size:9px;font-weight:700;color:#fff;line-height:1;
+                           background:<?= $isAi ? '#9E1C60' : '#17693F' ?>"><?= $isAi ? '✦' : '◉' ?></span>
+            </span>
+          <?php else: ?>
+            <span class="muted" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;
+                       border:1px dashed #EADFE2;border-radius:10px;font-size:16px">·</span>
+          <?php endif; ?>
+        </td>
+        <td><code style="font-size:12px;letter-spacing:.06em;color:#561530"><?= esc($p['code'] ?? '—') ?></code></td>
         <td>
           <strong><?= esc($p['name']) ?></strong>
           <div class="muted" style="font-size:12px"><?= esc($p['slug']) ?><?= $p['note'] ? ' · ' . esc($p['note']) : '' ?></div>

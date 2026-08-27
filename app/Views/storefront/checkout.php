@@ -145,7 +145,7 @@
           <span style="font-size:11px; font-weight:700; letter-spacing:0.2em; color:#75666B">ORDER SUMMARY</span>
           <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
             <div style="display:flex; gap:10px; align-items:center; padding-bottom:10px; border-bottom:1px solid #EADFE2">
-              <img src="{{ l.image }}" alt="{{ l.name }}" loading="lazy" onError="{{ onImgError }}" style="width:40px; height:40px; border-radius:12px; object-fit:cover; flex:none">
+              <span style="position:relative; flex:none; display:block"><img src="{{ l.image }}" alt="{{ l.name }}" loading="lazy" onError="{{ onImgError }}" style="width:40px; height:40px; border-radius:12px; object-fit:cover; flex:none"><sc-if value="{{ l.showOrigin }}" hint-placeholder-val="{{ false }}"><span title="{{ l.originTitle }}" style="position:absolute; right:-3px; bottom:-3px; width:16px; height:16px; border-radius:999px; border:2px solid #FFFFFF; background:{{ l.originBg }}; color:#FFFFFF; font-size:8.5px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1">{{ l.originMark }}</span></sc-if></span>
               <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px"><span style="font-size:13px; color:#2B171F">{{ l.qtyName }}</span>
               <sc-if value="{{ l.hasOptions }}" hint-placeholder-val="{{ false }}">
                 <span style="font-size:11.5px; font-weight:700; letter-spacing:0.04em; color:#9E1C60">{{ l.options }}</span>

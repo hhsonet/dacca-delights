@@ -31,6 +31,8 @@ class Products extends AdminController
             'categories' => (new CategoryModel())->ordered(),
             'q'          => $q,
             'cat'        => $cat,
+            // Primary photo per product, so the list can show it with its mark.
+            'primary'    => (new \App\Models\ProductPhotoModel())->primaryByProduct(),
         ], 'Products');
     }
 
@@ -54,7 +56,69 @@ class Products extends AdminController
             'active'     => 'products',
             'row'        => $row,
             'categories' => (new CategoryModel())->ordered(),
+            'photos'     => (new \App\Models\ProductPhotoModel())->forProduct($id),
+            'maxPhotos'  => \App\Libraries\ProductPhotoStore::MAX_PHOTOS,
         ], 'Edit product');
+    }
+
+    /** POST /admin/products/(id)/photos — add one photo. */
+    public function uploadPhoto(int $id)
+    {
+        $product = (new ProductModel())->find($id);
+        if (!$product) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        $file  = $this->request->getFile('photo');
+        $store = new \App\Libraries\ProductPhotoStore();
+
+        if ($file === null) {
+            $this->flash('err', 'Choose an image to upload.');
+        } elseif (!$store->add($product, $file)) {
+            $this->flash('err', $store->error());
+        } else {
+            $this->flash('ok', $store->replacedLast()
+                ? 'Photo saved — the last slot was replaced.'
+                : 'Photo added.');
+        }
+
+        return redirect()->to(base_url('admin/products/' . $id . '/edit'));
+    }
+
+    /** POST /admin/products/(id)/photos/(photoId)/origin — mark real or AI. */
+    public function photoOrigin(int $id, int $photoId)
+    {
+        $model = new \App\Models\ProductPhotoModel();
+        $photo = $model->where('id', $photoId)->where('product_id', $id)->first();
+
+        if (!$photo) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        $isAi = $this->request->getPost('is_ai') === '1';
+        $model->update($photoId, ['is_ai' => $isAi ? 1 : 0]);
+
+        $this->flash('ok', 'Photo marked as ' . ($isAi ? 'AI-generated' : 'a real photo') . '.');
+
+        return redirect()->to(base_url('admin/products/' . $id . '/edit'));
+    }
+
+    /** POST /admin/products/(id)/photos/(photoId)/delete */
+    public function deletePhoto(int $id, int $photoId)
+    {
+        $product = (new ProductModel())->find($id);
+        if (!$product) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        $store = new \App\Libraries\ProductPhotoStore();
+        if ($store->delete($product, $photoId)) {
+            $this->flash('ok', 'Photo removed.');
+        } else {
+            $this->flash('err', $store->error());
+        }
+
+        return redirect()->to(base_url('admin/products/' . $id . '/edit'));
     }
 
     public function store()
@@ -90,6 +154,11 @@ class Products extends AdminController
 
         if ($data['slug'] === '' && $data['name'] !== '') {
             $data['slug'] = url_title($data['name'], '-', true);
+        }
+
+        // Codes are assigned by the system, never accepted from the form.
+        if ($id === null) {
+            $data['code'] = $model->generateCode();
         }
 
         if ($id !== null) {

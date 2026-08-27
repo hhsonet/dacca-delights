@@ -45,6 +45,9 @@
               <sc-if value="{{ p.isNew }}" hint-placeholder-val="{{ false }}">
                 <span style="position:absolute; left:12px; top:12px; background:#9E1C60; color:#FFFFFF; font-size:11px; font-weight:700; border-radius:999px; padding:6px 12px">New</span>
               </sc-if>
+              <sc-if value="{{ p.showOrigin }}" hint-placeholder-val="{{ false }}">
+                <span title="{{ p.originTitle }}" style="position:absolute; right:12px; bottom:12px; background:{{ p.originBg }}; color:#FFFFFF; font-size:10px; font-weight:700; border-radius:999px; padding:5px 10px">{{ p.originLabel }}</span>
+              </sc-if>
             </button>
             <div style="padding:16px; display:flex; flex-direction:column; gap:8px; flex:1">
               <span style="font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#9E1C60">{{ p.category }}</span>

@@ -21,6 +21,11 @@ $routes->get('signup',                  'Auth::signupPage');
 // Checkout submission. Totals are recomputed server-side in OrderPlacer.
 $routes->post('order', 'Order::place', ['filter' => 'csrf']);
 
+// Google sign-in. Both are GET redirects in the OAuth flow; the `state`
+// parameter (not CSRF tokens) is what binds the callback to this session.
+$routes->get('auth/google',          'GoogleAuth::redirectToGoogle');
+$routes->get('auth/google/callback', 'GoogleAuth::callback');
+
 $routes->get('auth/me',      'Auth::me');
 $routes->get('auth/logout',  'Auth::logout');
 $routes->post('auth/signup', 'Auth::signup', ['filter' => 'csrf']);
@@ -52,6 +57,11 @@ $routes->group('admin', ['filter' => 'admin'], static function ($routes) {
         $routes->post("{$seg}/(:num)",           "Admin\\{$ctrl}::update/$1",    ['filter' => 'csrf']);
         $routes->post("{$seg}/(:num)/delete",    "Admin\\{$ctrl}::delete/$1",    ['filter' => 'csrf']);
     }
+
+    // Product photo uploads. Multipart, so CSRF is enforced here too.
+    $routes->post('products/(:num)/photos',                  'Admin\Products::uploadPhoto/$1', ['filter' => 'csrf']);
+    $routes->post('products/(:num)/photos/(:num)/delete',    'Admin\Products::deletePhoto/$1/$2', ['filter' => 'csrf']);
+    $routes->post('products/(:num)/photos/(:num)/origin',    'Admin\Products::photoOrigin/$1/$2', ['filter' => 'csrf']);
 
     $routes->get('orders',                'Admin\Orders::index');
     $routes->get('orders/(:num)',         'Admin\Orders::show/$1');

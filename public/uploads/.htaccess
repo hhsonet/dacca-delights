@@ -1,0 +1,17 @@
+# Uploads are data, never code. Even if something unexpected lands here it must
+# never be executed by the server.
+php_flag engine off
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Serve only image files from this tree; anything else is refused.
+    RewriteCond %{REQUEST_URI} !\.(jpe?g|png|webp|gif)$ [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+<FilesMatch "\.(php[0-9]?|phtml|phar|pl|py|cgi|asp|aspx|sh|htaccess)$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes -ExecCGI
+AddType text/plain .php .phtml .phar

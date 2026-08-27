@@ -19,7 +19,8 @@
           <div style="position:absolute; left:0; right:0; top:100%; margin-top:8px; z-index:40; background:#FFFFFF; border:1px solid #EADFE2; border-radius:18px; overflow:hidden; box-shadow:0 18px 44px rgba(86,21,48,0.14)">
             <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="4">
               <button onClick="{{ sg.open }}" style="width:100%; text-align:left; display:flex; align-items:center; gap:12px; background:none; border:0; border-bottom:1px solid #EADFE2; padding:11px 14px; cursor:pointer" style-hover="background:#FFF9F1">
-                <img src="{{ sg.image }}" alt="{{ sg.name }}" loading="lazy" style="width:42px; height:42px; border-radius:11px; object-fit:cover; flex:none">
+                <span style="position:relative; flex:none; display:block"><img src="{{ sg.image }}" alt="{{ sg.name }}" loading="lazy" style="width:42px; height:42px; border-radius:11px; object-fit:cover; flex:none">
+<sc-if value="{{ sg.showOrigin }}" hint-placeholder-val="{{ false }}"><span title="{{ sg.originTitle }}" style="position:absolute; right:-3px; bottom:-3px; width:15px; height:15px; border-radius:999px; border:2px solid #FFFFFF; background:{{ sg.originBg }}; color:#FFFFFF; font-size:8px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1">{{ sg.originMark }}</span></sc-if></span>
                 <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px">
                   <span style="font-size:14px; font-weight:600; color:#2B171F">{{ sg.name }}</span>
                   <span style="font-size:11.5px; color:#75666B">{{ sg.category }}</span>
@@ -51,6 +52,9 @@
                   <img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" onError="{{ onImgError }}" style="width:100%; height:100%; object-fit:cover; display:block; transition:transform 420ms ease" style-hover="transform:scale(1.07)">
                   <sc-if value="{{ p.badge }}" hint-placeholder-val="{{ false }}">
                     <span style="position:absolute; left:10px; top:10px; border-radius:999px; padding:5px 11px; font-size:10px; font-weight:700; letter-spacing:0.06em; background:{{ p.badgeBg }}; color:{{ p.badgeFg }}">{{ p.badge }}</span>
+                  </sc-if>
+                  <sc-if value="{{ p.showOrigin }}" hint-placeholder-val="{{ false }}">
+                    <span title="{{ p.originTitle }}" style="position:absolute; right:10px; bottom:10px; border-radius:999px; padding:4px 9px; font-size:9.5px; font-weight:700; letter-spacing:0.04em; background:{{ p.originBg }}; color:#FFFFFF">{{ p.originLabel }}</span>
                   </sc-if>
                 </button>
                 <div style="padding:13px; display:flex; flex-direction:column; gap:5px; flex:1">

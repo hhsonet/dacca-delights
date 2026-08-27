@@ -6,6 +6,8 @@ const DD_BASE = "<?= rtrim(base_url(), '/') ?>/";
 // CI4 rotates the CSRF token per request, so this is mutable — every auth
 // response hands back a fresh one.
 const DD_CSRF = { header: "<?= csrf_header() ?>", token: "<?= csrf_hash() ?>" };
+// Server-side flash (e.g. a failed Google round-trip) surfaced to the client.
+const DD_FLASH = "<?= esc(session('error') ?? '', 'js') ?>";
 const DD_SESSION = {
   authed:   <?= session()->get('customerId') ? 'true' : 'false' ?>,
   name:     "<?= esc(session()->get('customerName') ?? '', 'js') ?>",
@@ -142,6 +144,12 @@ class Component extends DCLogic {
             pickup:false, zone:"", localPhone:"", waSame:true, waCode:"+880", waNumber:"", mapsUrl:"", geoStatus:"" };
 
   componentDidMount() {
+    // Anything the server flashed on the way here (a failed Google sign-in,
+    // for instance) — the app renders its own toast, not a server page.
+    if (DD_FLASH) {
+      setTimeout(() => this.flash(DD_FLASH), 350);
+    }
+
     // Cart — localStorage, survives browser restarts.
     try {
       const raw = localStorage.getItem("dd_cart2");
@@ -317,10 +325,34 @@ class Component extends DCLogic {
   openProduct(p) {
     this.nav("product", { slug: p.slug, qty: this.minQtyFor(p), sugar:"", bform:"", slice:"", filling:"", notes:"", shot:0 });
   }
+  /**
+   * Origin badge for one image. Used everywhere an image is shown so the mark
+   * reads the same on every page.
+   *
+   * Only images an admin has classified are labelled. A seeded stock URL is
+   * left unmarked — calling it "Real" would assert something nobody checked.
+   */
+  originOf(src) {
+    const marked = !!(src && src.marked);
+    const isAi   = !!(src && src.isAi);
+    return {
+      isAi,
+      showOrigin:  marked,
+      originLabel: marked ? (isAi ? "✦ AI" : "◉ Real") : "",
+      // Compact form for thumbnail-sized images where a pill will not fit.
+      originMark:  marked ? (isAi ? "✦" : "◉") : "",
+      originTitle: marked
+        ? (isAi ? "AI-generated image, not a photograph of this item"
+                : "Real photograph of this item")
+        : "",
+      originBg:    isAi ? "rgba(158,28,96,0.92)" : "rgba(23,105,63,0.92)"
+    };
+  }
   card(p) {
     const b = this.badgeFor(p);
     return {
       name: p.name, category: p.cat, image: p.image, note: p.note, isNew: p.isNew,
+      ...this.originOf(p),
       price: this.money(p.price),
       qty: this.lineQty(this.cartKey(p.id)),
       inCart: !!this.state.cart[this.cartKey(p.id)],
@@ -670,6 +702,7 @@ class Component extends DCLogic {
       const opt = this.optionLabel(l);
       return {
         name: p.name, image: p.image, qty: l.qty,
+        ...this.originOf(p),
         qtyName: l.qty + " × " + p.name,
         options: opt, hasOptions: !!opt,
         note: l.note, hasNote: !!l.note, optionLabel: opt, pid: p.id, key,
@@ -995,6 +1028,7 @@ class Component extends DCLogic {
       showSuggest: q.length > 1 && matches.length > 0,
       suggestions: matches.slice(0, 5).map(p => ({
         name:p.name, category:p.cat, image:p.image, price:this.money(p.price),
+        ...this.originOf(p),
         open: () => this.openProduct(p)
       })),
       browseBest: () => this.setState({ query:"", category:"Best Sellers", shown:8 }),
@@ -1005,15 +1039,23 @@ class Component extends DCLogic {
       resultLabel: pool.length + (pool.length === 1 ? " product found" : " products found"),
       detail: (() => {
         const support = SUPPORT[detailP.cat] || SUPPORT["Breads"];
-        const shots = [{ src: detailP.image, id: null }]
-          .concat(support.map(id => ({ src: IMG(id, 1200), id })))
-          .filter((sh, i, all) => all.findIndex(o => o.src === sh.src) === i)
-          .slice(0, 3);
+        // Uploaded photos are the real gallery when they exist — each carries
+        // its own origin mark. Stock shots only fill in when there are none.
+        const uploaded = (detailP.photos || []).map(ph => ({
+          src: ph.src, id: null, marked: true, isAi: ph.isAi
+        }));
+        const shots = (uploaded.length
+          ? uploaded
+          : [{ src: detailP.image, id: null, marked: !!detailP.marked, isAi: !!detailP.isAi }]
+              .concat(support.map(id => ({ src: IMG(id, 1200), id, marked: false, isAi: false })))
+        ).filter((sh, i, all) => all.findIndex(o => o.src === sh.src) === i)
+         .slice(0, 6);
         const ix = Math.min(s.shot, shots.length - 1);
         const active = shots[ix];
         return {
           name: detailP.name, categoryUpper: detailP.cat.toUpperCase(),
           image: active.src,
+          ...this.originOf(active),
           imageSet: active.id ? IMG_SET(active.id) : "",
           imageSizes: active.id ? "(min-width:900px) 50vw, 100vw" : null,
           note: detailP.note || CAT_META[detailP.cat].blurb,
@@ -1026,6 +1068,7 @@ class Component extends DCLogic {
             sizes: sh.id ? "(min-width:900px) 160px, 30vw" : null,
             alt: detailP.name + " view " + (i + 1),
             border: i === ix ? "#F5AD18" : "#EADFE2",
+            ...this.originOf(sh),
             select: () => this.setState({ shot: i })
           })),
           moqNote: inBagelPool(detailP)
@@ -1083,8 +1126,8 @@ class Component extends DCLogic {
       idIsEmail: s.idMode === "email", idIsPhone: s.idMode === "phone",
       authModeWord: s.authMode === "register" ? "SIGN UP" : "SIGN IN",
       continueGoogle: () => {
-        this.flash("Google sign-in — connect OAuth to finish this route");
-        this.nav("account", { accountTab:"Dashboard", err:{} });
+        // Full navigation, not fetch — OAuth redirects through Google.
+        window.location.href = DD_BASE + "auth/google";
       },
       continueWhatsapp: () => this.setState({ idMode:"phone", phoneStep:true, err:{} }),
       phoneStep: s.phoneStep,
@@ -1219,7 +1262,8 @@ class Component extends DCLogic {
           items: o.items.map(i => {
             const p = PRODUCTS.find(x => x.name === i[0]);
             return { name:i[0], qty:i[1], unit:this.money(i[2]), total:this.money(i[1] * i[2]),
-                     image: p ? p.image : CAT_META["Breads"].image };
+                     image: p ? p.image : CAT_META["Breads"].image,
+                     ...this.originOf(p) };
           }),
           subtotal:this.money(sub), discount:this.money(o.discount), hasDiscount:o.discount > 0, delivery:this.money(del),
           total:this.money(sub - o.discount + del),

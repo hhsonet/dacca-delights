@@ -68,17 +68,39 @@ class StorefrontData
             ->orderBy('category_id', 'ASC')->orderBy('id', 'ASC')
             ->findAll();
 
+        // An uploaded photo is the real article and wins over the seeded URL.
+        $byProduct = (new \App\Models\ProductPhotoModel())->allByProduct();
+
         $out = [];
         foreach ($rows as $r) {
+            $id     = (int) $r['id'];
+            $photos = [];
+            foreach ($byProduct[$id] ?? [] as $ph) {
+                $photos[] = [
+                    'src'  => base_url('uploads/products/' . $ph['path']),
+                    'isAi' => $ph['is_ai'],
+                ];
+            }
+
+            $uploaded = $photos !== [] ? $photos[0] : null;
+            $img      = $uploaded !== null ? $uploaded['src'] : ($r['image'] ?? '');
+
             $out[] = [
-                'id'    => (int) $r['id'],
+                'id'    => $id,
+                'code'  => $r['code'] ?? '',
+                // Origin of the shown image. `marked` is false for seeded stock
+                // URLs that nobody has classified — labelling those "Real"
+                // would be a claim we cannot make.
+                'isAi'   => $uploaded['isAi'] ?? false,
+                'marked' => $uploaded !== null,
+                'photos' => $photos,
                 'slug'  => $r['slug'],
                 'name'  => $r['name'],
                 'note'  => $r['note'] ?? '',
                 'price' => (int) $r['price'],
                 'isNew' => (bool) $r['is_new'],
                 'cat'   => $catById[(int) $r['category_id']] ?? '',
-                'image' => $r['image'] ?? '',
+                'image' => $img,
                 'ing'   => $r['ingredients'] ?? '',
                 'kcal'  => (int) ($r['kcal'] ?? 0),
             ];

@@ -27,7 +27,7 @@
         <span style="font-size:11px; font-weight:700; letter-spacing:0.2em; color:#9E1C60">ITEMS</span>
         <sc-for list="{{ od.items }}" as="it" hint-placeholder-count="3">
           <div style="display:flex; gap:14px; align-items:center; padding-bottom:12px; border-bottom:1px solid #EADFE2">
-            <img src="{{ it.image }}" alt="{{ it.name }}" loading="lazy" style="width:60px; height:60px; border-radius:14px; object-fit:cover; flex:none">
+            <span style="position:relative; flex:none; display:block"><img src="{{ it.image }}" alt="{{ it.name }}" loading="lazy" style="width:60px; height:60px; border-radius:14px; object-fit:cover; flex:none"><sc-if value="{{ it.showOrigin }}" hint-placeholder-val="{{ false }}"><span title="{{ it.originTitle }}" style="position:absolute; right:-3px; bottom:-3px; width:16px; height:16px; border-radius:999px; border:2px solid #FFFFFF; background:{{ it.originBg }}; color:#FFFFFF; font-size:8.5px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1">{{ it.originMark }}</span></sc-if></span>
             <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px">
               <span style="font-size:15px; font-weight:600; color:#2B171F">{{ it.name }}</span>
               <span style="font-size:12.5px; color:#75666B">{{ it.qty }} × {{ it.unit }}</span>

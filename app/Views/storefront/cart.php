@@ -7,7 +7,7 @@
         <div style="flex:3 1 380px; min-width:0; display:flex; flex-direction:column; gap:12px">
           <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
             <div style="background:#FFFFFF; border:1px solid #EADFE2; border-radius:24px; padding:14px; display:flex; gap:14px; align-items:center">
-              <img src="{{ l.image }}" alt="{{ l.name }}" loading="lazy" onError="{{ onImgError }}" style="width:84px; height:84px; border-radius:18px; object-fit:cover; flex:none">
+              <span style="position:relative; flex:none; display:block"><img src="{{ l.image }}" alt="{{ l.name }}" loading="lazy" onError="{{ onImgError }}" style="width:84px; height:84px; border-radius:18px; object-fit:cover; flex:none"><sc-if value="{{ l.showOrigin }}" hint-placeholder-val="{{ false }}"><span title="{{ l.originTitle }}" style="position:absolute; right:-3px; bottom:-3px; width:16px; height:16px; border-radius:999px; border:2px solid #FFFFFF; background:{{ l.originBg }}; color:#FFFFFF; font-size:8.5px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1">{{ l.originMark }}</span></sc-if></span>
               <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:8px">
                 <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start">
                   <div style="display:flex; flex-direction:column; gap:3px; min-width:0">
