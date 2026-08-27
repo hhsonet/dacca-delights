@@ -1,0 +1,37 @@
+# Safety net for the repository root.
+#
+# Only public/ is meant to be web-served. If the document root is ever pointed
+# here by mistake — or the repo is cloned straight into public_html — this stops
+# the obvious disasters: .env holds the database password and the Google client
+# secret, and an exposed .git directory hands over the entire source history.
+#
+# This is a backstop, not the fix. Point the document root at public/.
+
+# Deny everything at this level by default.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
+
+# Belt and braces for the files that matter most, in case the block above is
+# overridden by a vhost that grants access further down.
+<FilesMatch "^\.env|^\.env\..*|composer\.(json|lock)|\.gitignore|\.gitattributes|spark|preload\.php">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # .git, .github, and any other dot-directory.
+    RewriteRule ^\.git - [F,L]
+    RewriteRule (^|/)\. - [F,L]
+</IfModule>
+
+Options -Indexes

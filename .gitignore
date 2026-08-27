@@ -124,3 +124,14 @@ _modules/*
 
 /results/
 /phpunit.xml
+
+# Production credentials — never commit
+.env.production
+
+# Deployment bundle output
+build/
+
+# Customer-uploaded product photos live on the server, not in git.
+# The folder and its .htaccess are kept; the images are not.
+/public/uploads/products/*
+!/public/uploads/products/.gitkeep

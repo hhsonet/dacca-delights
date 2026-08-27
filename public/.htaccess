@@ -1,3 +1,14 @@
+# This is the only directory that should be web-served. The repository root
+# denies everything as a backstop, and Apache 2.4 inherits that denial into
+# subdirectories — so access is granted back explicitly here.
+<IfModule mod_authz_core.c>
+    Require all granted
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Allow from all
+</IfModule>
+
 # Disable directory browsing
 Options -Indexes
 
