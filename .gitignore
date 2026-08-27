@@ -135,3 +135,8 @@ build/
 # The folder and its .htaccess are kept; the images are not.
 /public/uploads/products/*
 !/public/uploads/products/.gitkeep
+
+# Database dumps — contain customer names, phones, addresses and
+# admin password hashes. Never commit these.
+deploy/*.sql
+*.sql
