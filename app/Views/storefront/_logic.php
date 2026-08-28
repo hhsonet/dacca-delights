@@ -144,6 +144,16 @@ class Component extends DCLogic {
             pickup:false, zone:"", localPhone:"", waSame:true, waCode:"+880", waNumber:"", mapsUrl:"", geoStatus:"" };
 
   componentDidMount() {
+    // Landing straight on a product URL skips openProduct(), so the quantity
+    // would start at 1 even for an item with a higher minimum.
+    if (this.state.page === "product") {
+      const p = PRODUCTS.find(x => x.slug === this.state.slug);
+      const min = this.minQtyFor(p);
+      if (min > 1 && this.state.qty < min) {
+        this.setState({ qty: min });
+      }
+    }
+
     // Anything the server flashed on the way here (a failed Google sign-in,
     // for instance) — the app renders its own toast, not a server page.
     if (DD_FLASH) {
@@ -292,7 +302,13 @@ class Component extends DCLogic {
     };
     this.setState({ cart });
     this.persist(cart);
-    this.flash(PRODUCTS.find(x => x.id === id).name + " added to cart");
+
+    const product = PRODUCTS.find(x => x.id === id);
+    const min = this.minQtyFor(product);
+    // Say why the quantity jumped, otherwise landing on 4 looks like a bug.
+    this.flash(!prev && min > 1
+      ? product.name + " added — minimum order is " + min
+      : product.name + " added to cart");
   }
   cartKey(id, o) {
     return [id, (o && o.sugar) || "", (o && o.form) || "", (o && o.slice) || "", (o && o.filling) || ""].join("|");
@@ -303,7 +319,11 @@ class Component extends DCLogic {
   }
   setQty(key, q) {
     const cart = Object.assign({}, this.state.cart);
-    if (q <= 0) delete cart[key];
+    // Below the item's own minimum there is no valid line, so stepping down
+    // past it removes the item rather than leaving a quantity checkout will
+    // reject.
+    const min = this.minQtyForKey(key);
+    if (q < min) delete cart[key];
     else cart[key] = Object.assign({}, cart[key], { qty: q });
     this.setState({ cart });
     this.persist(cart);
@@ -317,10 +337,22 @@ class Component extends DCLogic {
     if (/Bunch|Combo|Trio/.test(p.name)) return { text:"POPULAR", bg:"#F5AD18", fg:"#561530" };
     return null;
   }
+  /**
+   * Minimum quantity for a single line of this product.
+   *
+   * The pooled bagel minimum is deliberately NOT applied here. It is a
+   * cart-level rule — any mix of single bagels must total BAGEL_POOL_MOQ —
+   * so forcing each bagel line to 6 would stop a customer ordering 2 of one
+   * flavour and 4 of another, which the rule explicitly allows.
+   */
   minQtyFor(p) {
-    if (ITEM_MOQ[p.name]) return ITEM_MOQ[p.name];
-    if (inBagelPool(p)) return BAGEL_POOL_MOQ;
-    return 1;
+    return (p && ITEM_MOQ[p.name]) || 1;
+  }
+  /** Minimum for an existing cart line, by cart key. */
+  minQtyForKey(key) {
+    const line = this.state.cart[key];
+    if (!line) return 1;
+    return this.minQtyFor(PRODUCTS.find(x => x.id === line.id));
   }
   openProduct(p) {
     this.nav("product", { slug: p.slug, qty: this.minQtyFor(p), sugar:"", bform:"", slice:"", filling:"", notes:"", shot:0 });
@@ -368,9 +400,11 @@ class Component extends DCLogic {
       addAria: needsOptions(p) ? "Choose options for " + p.name : "Add " + p.name + " to cart",
       open: () => this.openProduct(p),
       // mandatory choices can't be made on a card — send the customer to the item page
+      // First add jumps straight to the item's minimum; once it is in the cart
+      // the same (+) control steps by one.
       add: needsOptions(p)
         ? () => { this.openProduct(p); this.flash("Choose your options for " + p.name); }
-        : () => this.add(p.id, this.minQtyFor(p))
+        : () => this.add(p.id, this.state.cart[this.cartKey(p.id)] ? 1 : this.minQtyFor(p))
     };
   }
 
