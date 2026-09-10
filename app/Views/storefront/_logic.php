@@ -432,6 +432,15 @@ class Component extends DCLogic {
       ing: p.ing, kcal: p.kcal + " kcal / 100g",
       badge: b ? b.text : "", badgeBg: b ? b.bg : "transparent", badgeFg: b ? b.fg : "transparent",
       minQty: this.minQtyFor(p),
+      // Say the minimum up front. Without it the first click silently turns
+      // into four items and the customer only finds out afterwards.
+      hasMin: this.minQtyFor(p) > 1,
+      minNote: "Min " + this.minQtyFor(p),
+      // At the minimum the (−) removes the line rather than stepping down, so
+      // the control needs to say so instead of still reading "Decrease".
+      decLabel: this.lineQty(this.cartKey(p.id)) <= this.minQtyFor(p)
+        ? "Remove " + p.name + " from cart"
+        : "Decrease quantity of " + p.name,
       addLabel: needsOptions(p) ? "Choose" : "+ Add",
       addAria: needsOptions(p) ? "Choose options for " + p.name : "Add " + p.name + " to cart",
       open: () => this.openProduct(p),

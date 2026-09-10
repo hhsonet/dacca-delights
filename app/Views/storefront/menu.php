@@ -61,12 +61,12 @@
                   <button onClick="{{ p.open }}" style="background:none; border:0; padding:0; text-align:left; cursor:pointer; font-family:'Fraunces',serif; font-weight:600; font-size:17px; line-height:1.32; letter-spacing:0.5px; color:#2B171F" style-hover="color:#811844">{{ p.name }}</button>
                   <span style="font-size:12px; font-weight:400; line-height:1.5; color:#6B7280">{{ p.note }}</span>
                   <span style="font-size:11px; font-weight:400; line-height:1.5; color:#6B7280; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden"><span style="font-weight:600; color:#4B5563">Ingredients:</span> {{ p.ing }}</span>
-                  <span style="align-self:flex-start; background:#FDF3DF; color:#8A5A08; border-radius:6px; padding:3px 7px; font-size:10px; font-weight:700; white-space:nowrap">{{ p.kcal }}</span>
+                  <span style="display:flex; align-items:center; gap:6px; flex-wrap:wrap"><span style="background:#FDF3DF; color:#8A5A08; border-radius:6px; padding:3px 7px; font-size:10px; font-weight:700; white-space:nowrap">{{ p.kcal }}</span><sc-if value="{{ p.hasMin }}" hint-placeholder-val="{{ false }}"><span title="This item is sold in a minimum quantity" style="background:#F1E3EA; color:#9E1C60; border-radius:6px; padding:3px 7px; font-size:10px; font-weight:700; white-space:nowrap">{{ p.minNote }}</span></sc-if></span>
                   <div style="margin-top:auto; padding-top:11px; display:flex; align-items:center; justify-content:space-between; gap:8px">
                     <span style="font-size:16px; font-weight:700; color:#561530; white-space:nowrap">{{ p.price }}</span>
                     <sc-if value="{{ p.inCart }}" hint-placeholder-val="{{ false }}">
                       <div style="display:flex; align-items:center; border:1px solid #F5AD18; border-radius:12px; background:#FFF9F1">
-                        <button onClick="{{ p.dec }}" aria-label="Decrease" style="width:32px; height:34px; background:none; border:0; cursor:pointer; font-size:16px; color:#561530">−</button>
+                        <button onClick="{{ p.dec }}" aria-label="{{ p.decLabel }}" title="{{ p.decLabel }}" style="width:32px; height:34px; background:none; border:0; cursor:pointer; font-size:16px; color:#561530">−</button>
                         <span style="min-width:20px; text-align:center; font-size:13px; font-weight:700; color:#561530">{{ p.qty }}</span>
                         <button onClick="{{ p.add }}" aria-label="Increase" style="width:32px; height:34px; background:none; border:0; cursor:pointer; font-size:16px; color:#561530">+</button>
                       </div>
