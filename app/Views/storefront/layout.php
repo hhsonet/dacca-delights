@@ -97,11 +97,25 @@
       </nav>
 
       <div style="display:flex; align-items:center; gap:8px">
-        <label class="hsearch" style="display:none; align-items:center; gap:9px; height:42px; padding:0 14px; border-radius:12px; border:1px solid #EADFE2; background:#FFFFFF; min-width:0; transition:border-color 160ms ease" style-focus="border-color:#9E1C60">
+        <label class="hsearch" style="display:none; position:relative; align-items:center; gap:9px; height:42px; padding:0 14px; border-radius:12px; border:1px solid #EADFE2; background:#FFFFFF; min-width:0; transition:border-color 160ms ease" style-focus="border-color:#9E1C60">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none; opacity:0.6"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
           <input value="{{ query }}" onChange="{{ onQuery }}" onKeyDown="{{ onSearchKey }}" placeholder="Search breads, bagels, tarts…" aria-label="Search the menu" style="border:0; background:none; outline:none; padding:0; width:190px; min-width:0; font-size:13.5px; font-weight:500; color:#2B171F">
           <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
             <button onClick="{{ clearQuery }}" aria-label="Clear search" style="flex:none; background:none; border:0; padding:0; cursor:pointer; color:#9C8D92; display:flex"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </sc-if>
+          <sc-if value="{{ showSuggestHeader }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; left:0; right:0; top:100%; margin-top:10px; z-index:70; background:#FFFFFF; border:1px solid #EADFE2; border-radius:16px; overflow:hidden; box-shadow:0 18px 44px rgba(86,21,48,0.16)">
+              <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="4">
+                <button onClick="{{ sg.open }}" style="width:100%; text-align:left; display:flex; align-items:center; gap:11px; background:none; border:0; border-bottom:1px solid #EADFE2; padding:10px 13px; cursor:pointer" style-hover="background:#FFF9F1">
+                  <span style="position:relative; flex:none; display:block"><img src="{{ sg.image }}" alt="{{ sg.name }}" loading="lazy" style="width:38px; height:38px; border-radius:10px; object-fit:cover; display:block"><sc-if value="{{ sg.showOrigin }}" hint-placeholder-val="{{ false }}"><span title="{{ sg.originTitle }}" style="position:absolute; right:-3px; bottom:-3px; width:15px; height:15px; border-radius:999px; border:2px solid #FFFFFF; background:{{ sg.originBg }}; color:#FFFFFF; font-size:8px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1">{{ sg.originMark }}</span></sc-if></span>
+                  <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px">
+                    <span style="font-size:13.5px; font-weight:600; color:#2B171F">{{ sg.name }}</span>
+                    <span style="font-size:11px; color:#75666B">{{ sg.category }}</span>
+                  </span>
+                  <span style="font-size:13.5px; font-weight:700; color:#561530; white-space:nowrap">{{ sg.price }}</span>
+                </button>
+              </sc-for>
+            </div>
           </sc-if>
         </label>
 
@@ -127,9 +141,25 @@
     </div>
     <sc-if value="{{ searchOpen }}" hint-placeholder-val="{{ false }}">
       <div style="border-top:1px solid #EADFE2; background:#FFFFFF">
-        <div style="max-width:1200px; margin:0 auto; padding:14px 16px; display:flex; gap:10px; align-items:center">
-          <input value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search cakes, breads, pastries…" style="flex:1; min-width:0; border:1px solid #EADFE2; border-radius:14px; background:#FFF9F1; padding:13px 16px; font-size:15px; color:#2B171F">
+        <div style="max-width:1200px; margin:0 auto; padding:14px 16px; position:relative">
+         <div style="display:flex; gap:10px; align-items:center">
+          <input value="{{ query }}" onChange="{{ onQuery }}" onKeyDown="{{ onSearchKey }}" placeholder="Search cakes, breads, pastries…" style="flex:1; min-width:0; border:1px solid #EADFE2; border-radius:14px; background:#FFF9F1; padding:13px 16px; font-size:15px; color:#2B171F">
           <button onClick="{{ runSearch }}" style="border:0; border-radius:14px; background:#561530; color:#FFF9F1; padding:13px 20px; font-size:13px; font-weight:600; cursor:pointer">Search</button>
+         </div>
+          <sc-if value="{{ showSuggestHeader }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; left:16px; right:16px; top:100%; margin-top:-2px; z-index:70; background:#FFFFFF; border:1px solid #EADFE2; border-radius:16px; overflow:hidden; box-shadow:0 18px 44px rgba(86,21,48,0.16)">
+              <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="4">
+                <button onClick="{{ sg.open }}" style="width:100%; text-align:left; display:flex; align-items:center; gap:11px; background:none; border:0; border-bottom:1px solid #EADFE2; padding:11px 14px; cursor:pointer" style-hover="background:#FFF9F1">
+                  <span style="position:relative; flex:none; display:block"><img src="{{ sg.image }}" alt="{{ sg.name }}" loading="lazy" style="width:40px; height:40px; border-radius:11px; object-fit:cover; display:block"><sc-if value="{{ sg.showOrigin }}" hint-placeholder-val="{{ false }}"><span title="{{ sg.originTitle }}" style="position:absolute; right:-3px; bottom:-3px; width:15px; height:15px; border-radius:999px; border:2px solid #FFFFFF; background:{{ sg.originBg }}; color:#FFFFFF; font-size:8px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1">{{ sg.originMark }}</span></sc-if></span>
+                  <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px">
+                    <span style="font-size:14px; font-weight:600; color:#2B171F">{{ sg.name }}</span>
+                    <span style="font-size:11.5px; color:#75666B">{{ sg.category }}</span>
+                  </span>
+                  <span style="font-size:14px; font-weight:700; color:#561530; white-space:nowrap">{{ sg.price }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
         </div>
       </div>
     </sc-if>

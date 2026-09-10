@@ -1133,6 +1133,9 @@ class Component extends DCLogic {
       hasQuery: q.length > 0,
       clearQuery: () => this.setState({ query:"", shown:8 }),
       showSuggest: q.length > 1 && matches.length > 0,
+      // The menu page has its own search box bound to the same query, so
+      // without this both dropdowns would open at once on that page.
+      showSuggestHeader: q.length > 1 && matches.length > 0 && s.page !== "menu",
       suggestions: matches.slice(0, 5).map(p => ({
         name:p.name, category:p.cat, image:p.image, price:this.money(p.price),
         ...this.originOf(p),
