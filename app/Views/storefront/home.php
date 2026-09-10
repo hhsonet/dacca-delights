@@ -75,7 +75,7 @@
               <span style="align-self:flex-start; background:#FDF3DF; color:#8A5A08; border-radius:6px; padding:3px 7px; font-size:10.5px; font-weight:700; white-space:nowrap">{{ p.kcal }}</span>
               <div style="margin-top:auto; padding-top:12px; display:flex; align-items:center; justify-content:space-between; gap:10px">
                 <span style="font-size:18px; font-weight:700; color:#561530">{{ p.price }}</span>
-                <button onClick="{{ p.add }}" aria-label="{{ p.addAria }}" style="min-width: 42px; height: 42px; padding: 0 {{ p.addPadX }}; border-radius: 14px; border: 1px solid #EADFE2; background: #FFF9F1; color: #561530; font-size: {{ p.addSize }}; font-weight: 700; cursor: pointer; flex: none; transition: all 180ms ease; text-align: center" style-hover="background:#F5AD18; border-color:#F5AD18">{{ p.addGlyph }}</button>
+                <button onClick="{{ p.add }}" aria-label="{{ p.addAria }}" style="background:#F5AD18; color:#561530; border:0; border-radius:14px; padding:11px 18px; font-size:13px; font-weight:700; cursor:pointer; flex:none; white-space:nowrap; transition:background 180ms ease, color 180ms ease, transform 180ms ease" style-hover="background:#9E1C60; color:#FFFFFF; transform:translateY(-1px)">{{ p.addLabel }}</button>
               </div>
             </div>
           </article>

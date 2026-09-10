@@ -433,9 +433,6 @@ class Component extends DCLogic {
       badge: b ? b.text : "", badgeBg: b ? b.bg : "transparent", badgeFg: b ? b.fg : "transparent",
       minQty: this.minQtyFor(p),
       addLabel: needsOptions(p) ? "Choose" : "+ Add",
-      addGlyph: needsOptions(p) ? "Choose" : "+",
-      addSize: needsOptions(p) ? "12px" : "20px",
-      addPadX: needsOptions(p) ? "16px" : "0px",
       addAria: needsOptions(p) ? "Choose options for " + p.name : "Add " + p.name + " to cart",
       open: () => this.openProduct(p),
       // mandatory choices can't be made on a card — send the customer to the item page
