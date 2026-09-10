@@ -5,17 +5,26 @@
       <div style="border-radius:32px; overflow:hidden; background:#561530; color:#FFF9F1; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))">
 
         <div style="order:0; position:relative; background:#6B2440; min-height:clamp(260px,46vw,100%)">
-          <img src="https://www.daccadelights.com/assets/Items/croissants.jpeg"
-               alt="Freshly baked butter croissants, still warm from the oven"
-               onError="{{ onImgError }}"
-               style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block">
+          <sc-for list="{{ heroSlides }}" as="h" hint-placeholder-count="6">
+            <img src="{{ h.src }}" alt="{{ h.alt }}" onError="{{ onImgError }}"
+                 style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; opacity:{{ h.opacity }}; z-index:{{ h.zIndex }}; transition:opacity 900ms ease"></sc-for>
           <!-- Darkens the edge nearest the copy so the two cells read as one panel. -->
           <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(86,21,48,0.55) 0%, rgba(86,21,48,0) 55%)"></div>
 
           <div style="position:absolute; left:clamp(16px,3vw,28px); bottom:clamp(16px,3vw,28px); background:#FFF9F1; color:#561530; border-radius:16px; padding:12px 16px; box-shadow:0 12px 30px rgba(0,0,0,0.22)">
             <div style="font-size:10px; font-weight:700; letter-spacing:0.18em; color:#9E1C60">TODAY’S BATCH</div>
-            <div style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; margin-top:2px">Butter Croissants</div>
+            <div style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; margin-top:2px">{{ heroBatchName }}</div>
           </div>
+
+          <sc-if value="{{ hasHeroCarousel }}" hint-placeholder-val="{{ true }}">
+            <div role="tablist" aria-label="Choose hero image"
+                 style="position:absolute; right:clamp(16px,3vw,28px); bottom:clamp(16px,3vw,28px); z-index:3; display:flex; align-items:center; gap:6px">
+              <sc-for list="{{ heroDots }}" as="d" hint-placeholder-count="6">
+                <button onClick="{{ d.go }}" aria-label="{{ d.label }}"
+                        style="height:7px; width:{{ d.width }}; padding:0; border:0; border-radius:999px; cursor:pointer; background:{{ d.bg }}; transition:width 240ms ease, background 240ms ease"></button>
+              </sc-for>
+            </div>
+          </sc-if>
         </div>
 
         <div style="order:1; padding:clamp(28px,5vw,60px); display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:20px">
