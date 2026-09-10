@@ -670,108 +670,207 @@ class Component extends DCLogic {
     const el = this.chatScroll;
     if (el) requestAnimationFrame(() => { el.scrollTop = el.scrollHeight; });
   }
-  async askAgent(text) {
+  /**
+   * The order assistant, answered locally.
+   *
+   * Everything it needs — the catalogue, prices, minimums, delivery zones and
+   * the cart — is already in the browser, so it needs no API key and no
+   * network call. It recognises a fixed set of intents and says plainly when
+   * a question is outside them rather than inventing an answer.
+   */
+  askAgent(text) {
     const msg = (text || "").trim();
     if (!msg || this.state.chatBusy) return;
+
     this.pushChat("user", msg);
     this.setState({ chatDraft: "", chatBusy: true });
     this.scrollChat();
 
-    const history = this.state.chatLog.concat([{ role: "user", text: msg }])
-      .map(m => ({ role: m.role === "user" ? "user" : "assistant", content: m.text }));
-
-    const system = [
-      "You are the order assistant for Dacca Delights, a small-batch bakery cloud kitchen in Dhaka, Bangladesh.",
-      "Voice: warm, brief, craft-focused. Two or three sentences at most unless listing items. Never use emoji or markdown formatting.",
-      "Prices are in Bangladeshi taka, written like 350 tk. Never invent products, prices or delivery fees — use only the data below.",
-      "",
-      "MENU (name | category | price | unit or minimum | energy per 100g | key ingredients):",
-      this.catalogueForModel(),
-      "",
-      "BAGEL MINIMUM: single bagels share one minimum of " + BAGEL_POOL_MOQ + " pieces, and the customer may mix any flavours to reach it. Jerusalem Bagel has its own minimum of 2. Bagel Bunches are pre-set and exempt. Never let an order go through with fewer than " + BAGEL_POOL_MOQ + " pooled bagels.",
-      "CHICKEN PUFFS: Chicken Puff (200 tk, minimum 2) and Mini Chicken Puff (70 tk, minimum 20) are each one product with a mandatory filling choice — Spicy or Creamy. Always ask which before adding.",
-      "BREAD RULES: most items in the Breads category need a sugar choice (Standard or Sugar-Free) and a format (Whole Loaf or Sliced). If Sliced, also a thickness (Regular Slice, Thick Slice or Thin Slice). Ask for these before adding such a bread to the cart.",
-      "These breads are sold as-is and take NO sugar or slicing options — never ask about them: " + NO_BREAD_OPTIONS.join(", ") + ".",
-      "DELIVERY: self-pickup from North Kafrul is free. Delivery fees by area — " + this.zonesForModel() + ".",
-      "Cash on delivery is only available in Dhaka Cantonment, Gulshan, Banani, Baridhara Diplomatic Zone and Baridhara DOHS. Everywhere else pays online.",
-      "HOURS: baking 6am to 2pm daily, orders taken until 8pm.",
-      "DELIVERY DATE: orders before " + cutoffHour + ":00 can choose same-day; after that the earliest is tomorrow. Right now same-day is " + (sameDayOpen ? "available" : "closed") + ". Customers can book up to " + windowDays + " days ahead.",
-      "",
-      "CURRENT CART: " + this.cartForModel(),
-      "",
-      "Use add_to_cart when the customer has chosen something concrete. Use open_page to take them to the cart, checkout, menu or a product. Confirm what you did in plain words after using a tool."
-    ].join("\n");
-
-    const tools = [
-      {
-        name: "add_to_cart",
-        description: "Add a menu item to the customer's cart. For Breads, sugar and form are required.",
-        input_schema: {
-          type: "object",
-          properties: {
-            product: { type: "string", description: "Exact product name from the menu" },
-            qty: { type: "number", description: "Quantity, default 1" },
-            sugar: { type: "string", enum: ["Standard", "Sugar-Free"] },
-            form: { type: "string", enum: ["Whole Loaf", "Sliced"] },
-            slice: { type: "string", enum: ["Regular Slice", "Thick Slice", "Thin Slice"] },
-            filling: { type: "string", enum: ["Spicy", "Creamy"] },
-            note: { type: "string", description: "Any special instruction from the customer" }
-          },
-          required: ["product"]
-        },
-        run: async input => {
-          const want = String(input.product || "").toLowerCase();
-          const p = PRODUCTS.find(x => x.name.toLowerCase() === want)
-            || PRODUCTS.find(x => x.name.toLowerCase().includes(want));
-          if (!p) return "No product matches that name. Ask the customer to pick from the menu.";
-          if (needsFilling(p) && !input.filling) {
-            return p.name + " needs a filling choice — Spicy or Creamy. Ask the customer, then call again.";
-          }
-          if (needsSugar(p) && (!input.sugar || (needsBreadOptions(p) && !input.form))) {
-            return "That bread needs a sugar choice and a format first. Ask the customer, then call again.";
-          }
-          if (input.form === "Sliced" && !input.slice) {
-            return "Sliced bread needs a thickness. Ask the customer, then call again.";
-          }
-          this.add(p.id, Math.max(1, Math.round(input.qty || 1)), {
-            sugar: input.sugar || "", form: input.form || "", slice: input.slice || "", filling: input.filling || "", note: input.note || ""
-          });
-          return "Added " + (input.qty || 1) + " x " + p.name + ". Cart is now: " + this.cartForModel();
-        }
-      },
-      {
-        name: "open_page",
-        description: "Navigate the customer to a page in the shop.",
-        input_schema: {
-          type: "object",
-          properties: {
-            page: { type: "string", enum: ["menu", "cart", "checkout", "about", "bulk"] },
-            product: { type: "string", description: "Product name, to open its detail page instead" }
-          }
-        },
-        run: async input => {
-          if (input.product) {
-            const want = String(input.product).toLowerCase();
-            const p = PRODUCTS.find(x => x.name.toLowerCase() === want)
-              || PRODUCTS.find(x => x.name.toLowerCase().includes(want));
-            if (p) { this.openProduct(p); return "Opened " + p.name + "."; }
-          }
-          const page = input.page || "menu";
-          if (page === "menu") this.nav("menu", { category:"Best Sellers", shown:8, query:"" });
-          else this.nav(page);
-          return "Opened the " + page + " page.";
-        }
+    // A beat before replying, so the conversation does not snap back
+    // instantly and read as canned.
+    setTimeout(() => {
+      let reply;
+      try {
+        reply = this.answerLocally(msg);
+      } catch (e) {
+        reply = "Something went wrong on my side. Message us on WhatsApp at +880 1622 823269 and we will sort it out.";
       }
-    ];
+      this.pushChat("assistant", reply);
+      this.setState({ chatBusy: false });
+      this.scrollChat();
+    }, 260);
+  }
 
-    try {
-      const reply = await window.claude.complete({ system, messages: history, tools, max_tokens: 700 });
-      this.pushChat("assistant", (reply || "").trim() || "Sorry — I did not catch that. Could you say it another way?");
-    } catch (err) {
-      this.pushChat("assistant", "I could not reach the kitchen just then. Try again, or message us on WhatsApp at +880 1622 823269.");
+  /** Digits, or the number words a customer actually types. */
+  parseQty(t) {
+    const digits = t.match(/(\d+)\s*(?:x|pcs?|pieces?)?/);
+    if (digits) return Math.min(500, Math.max(1, parseInt(digits[1], 10)));
+    const words = { a:1, an:1, one:1, two:2, three:3, four:4, five:5, six:6,
+                    seven:7, eight:8, nine:9, ten:10, dozen:12, twenty:20 };
+    for (const w in words) {
+      if (new RegExp("\\b" + w + "\\b").test(t)) return words[w];
     }
-    this.setState({ chatBusy: false });
-    this.scrollChat();
+    return null;
+  }
+
+  /** Best product for a phrase: the name matching most of what was typed. */
+  findProduct(t) {
+    // Customers type plurals ("croissants") for names that are singular, so
+    // both sides are stemmed before comparing.
+    const stem = w => w.replace(/(ies)$/, "y").replace(/(es|s)$/, "");
+    const words = t.replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(Boolean).map(stem);
+    let best = null, bestScore = 0;
+
+    PRODUCTS.forEach(p => {
+      const name = p.name.toLowerCase();
+      let score = 0;
+
+      if (t.includes(name)) {
+        score = 1000 + name.length;
+      } else {
+        const parts = name.replace(/[^a-z0-9\s]/g, " ").split(/\s+/)
+          .filter(w => w.length > 2).map(stem);
+        const hit = parts.filter(w => words.some(u =>
+          u === w || (u.length > 3 && w.startsWith(u)) || (w.length > 3 && u.startsWith(w))
+        ));
+        // Score by how much of the name was matched, so "butter croissant"
+        // beats a product that merely shares one common word.
+        if (hit.length) score = (hit.length / parts.length) * 100 + hit.length;
+      }
+
+      if (score > bestScore) { bestScore = score; best = p; }
+    });
+
+    // Below half the name matched it is more likely a coincidence than a pick.
+    return bestScore >= 50 ? best : null;
+  }
+
+  answerLocally(raw) {
+    const t = raw.toLowerCase();
+    const has = (...w) => w.some(x => t.includes(x));
+
+    // --- delivery -------------------------------------------------------
+    if (has("deliver", "delivery", "shipping", "charge to", "send to")) {
+      const zone = ZONES.find(z => t.includes(z.name.toLowerCase()));
+      if (zone) {
+        if (zone.fee === null) {
+          return "We do not deliver to " + zone.name + " yet. Self-pickup from "
+            + (this.props.pickupZone ?? "North Kafrul") + " is free, or message us on WhatsApp and we will see what we can do.";
+        }
+        const cod = COD_ZONES.indexOf(zone.name) >= 0;
+        return "Yes, we deliver to " + zone.name + ". Delivery is " + this.money(zone.fee)
+          + (cod ? ", and you can pay cash on delivery there." : ". That area is prepaid — cash on delivery is only in a few zones.");
+      }
+      return "We deliver across Dhaka, with the fee depending on the area — from "
+        + this.money(Math.min(...ZONES.filter(z => z.fee !== null).map(z => z.fee)))
+        + " upward. Tell me your area and I will check it. Self-pickup is always free.";
+    }
+
+    // --- add to cart ----------------------------------------------------
+    if (has("add", "order", "buy", "want", "get me", "i'll take", "ill take")) {
+      const p = this.findProduct(t);
+      if (p) {
+        if (needsOptions(p)) {
+          this.openProduct(p);
+          const need = needsFilling(p) ? "a filling" : "a sugar and format choice";
+          return p.name + " needs " + need + " before it goes in the cart. I have opened it for you — pick your options and add it there.";
+        }
+        const min = this.minQtyFor(p);
+        const asked = this.parseQty(t);
+        const qty = Math.max(asked || 1, min);
+        this.add(p.id, qty);
+        const note = (asked && asked < min) ? " Its minimum is " + min + ", so I rounded up." : "";
+        return "Added " + qty + " x " + p.name + " — " + this.money(p.price * qty) + "." + note
+          + " Anything else, or shall I take you to the cart?";
+      }
+      return "I could not tell which item you meant. Try the exact name, like \"add 4 butter croissants\", or say \"menu\" to browse.";
+    }
+
+    // --- price ----------------------------------------------------------
+    if (has("how much", "price", "cost", "rate")) {
+      const p = this.findProduct(t);
+      if (p) {
+        const min = this.minQtyFor(p);
+        return p.name + " is " + this.money(p.price)
+          + (p.note ? " (" + p.note + ")" : "")
+          + (min > 1 ? ". Minimum order is " + min + " pieces." : ".");
+      }
+      return "Tell me the item and I will give you the price — or say \"menu\" to see everything.";
+    }
+
+    // --- cart -----------------------------------------------------------
+    if (has("my cart", "in my cart", "basket", "what have i", "cart total")) {
+      const keys = Object.keys(this.state.cart);
+      if (!keys.length) return "Your cart is empty. Say \"menu\" to browse, or tell me what you would like.";
+      let total = 0;
+      const lines = keys.map(k => {
+        const l = this.state.cart[k];
+        const p = PRODUCTS.find(x => x.id === l.id);
+        total += p.price * l.qty;
+        return l.qty + " x " + p.name;
+      });
+      return "You have " + lines.join(", ") + ". Subtotal " + this.money(total)
+        + ". Say \"checkout\" when you are ready.";
+    }
+
+    // --- checkout -------------------------------------------------------
+    if (has("checkout", "place order", "pay", "confirm order")) {
+      if (!Object.keys(this.state.cart).length) return "Your cart is empty, so there is nothing to check out yet.";
+      this.nav("checkout");
+      return "Taking you to checkout. You will need a delivery area, a date and a payment method.";
+    }
+
+    // --- browse ---------------------------------------------------------
+    if (has("menu", "browse", "show me", "what do you have", "catalog", "catalogue")) {
+      const cat = CATS.find(c => c !== "Best Sellers" && t.includes(c.toLowerCase()));
+      this.nav("menu", { category: cat || "Best Sellers", shown: 8, query: "" });
+      return cat ? "Here is our " + cat + " selection." : "Here is the menu — starting with our best sellers.";
+    }
+
+    // --- recommendations ------------------------------------------------
+    if (has("good today", "recommend", "best", "popular", "suggest", "what's nice", "whats nice")) {
+      const picks = FEATURED.slice(0, 3).join(", ");
+      return "Our most ordered right now: " + picks + ". Say \"add\" with any of those, or \"menu\" to see the rest.";
+    }
+
+    // --- bulk -----------------------------------------------------------
+    if (has("party", "bulk", "wholesale", "event", "corporate", "wedding", "office")) {
+      this.nav("bulk");
+      return "For larger orders we quote per batch — I have opened the bulk order page. You can also reach the kitchen on +880 1622 823269.";
+    }
+
+    // --- hours ----------------------------------------------------------
+    if (has("hour", "open", "close", "timing", "when do you")) {
+      return "We bake 9 am to 3 pm and deliver 5 pm to 9 pm, daily. Orders placed before "
+        + (this.props.sameDayCutoffHour ?? 9) + ":00 can go out the same day.";
+    }
+
+    // --- contact --------------------------------------------------------
+    if (has("whatsapp", "phone", "call", "contact", "number", "email")) {
+      return "You can reach the kitchen on +880 1622 823269, on WhatsApp too, or at info@daccadelights.com.";
+    }
+
+    // --- greetings ------------------------------------------------------
+    if (has("hello", "hi ", "hey", "salam", "assalam") || t === "hi") {
+      return "Hello. I can show you the menu, check delivery to your area, or add items to your cart. What would you like?";
+    }
+    if (has("thank", "thanks", "shukriya")) {
+      return "Any time. Say \"checkout\" when you are ready, or ask me anything else.";
+    }
+
+    // --- a named product on its own -------------------------------------
+    const guess = this.findProduct(t);
+    if (guess) {
+      this.openProduct(guess);
+      const min = this.minQtyFor(guess);
+      return guess.name + " is " + this.money(guess.price)
+        + (min > 1 ? ", minimum " + min + " pieces" : "")
+        + ". I have opened it — say \"add\" and I will put it in your cart.";
+    }
+
+    // --- honest fallback -------------------------------------------------
+    return "I can help with the menu, prices, delivery areas, and adding things to your cart. "
+      + "For anything else — custom cakes, allergies, a problem with an order — message the kitchen on +880 1622 823269.";
   }
 
   renderVals() {
