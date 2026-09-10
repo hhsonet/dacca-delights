@@ -137,7 +137,7 @@ const COUNTRY_CODES = [
 class Component extends DCLogic {
   state = { page:"<?= esc($page, 'js') ?>", slug:"<?= esc($slug ?? 'sourdough-bread', 'js') ?>", cart:{}, category:"<?= esc($category ?? 'Best Sellers', 'js') ?>", query:"<?= esc($query ?? '', 'js') ?>", shown:8, searchOpen:false, menuOpen:false,
             qty:1, payment:"", coupon:"", couponOk:false, orderNo:"", paid:"", toast:"", authMode:"<?= esc($authMode ?? 'login', 'js') ?>", authBusy:false,
-            orderBusy:false, heroIx:0,
+            orderBusy:false, heroIx:0, suggestOpen:true,
             authed: DD_SESSION.authed, customerName: DD_SESSION.name, customerLastName: DD_SESSION.lastName,
             customerEmail: DD_SESSION.email, customerPhone: DD_SESSION.phone,
             accountTab:"<?= esc($accountTab ?? 'Dashboard', 'js') ?>", showPw:false, remember:true, terms:false, orderIx:(function(){ const r = "<?= esc($orderRef ?? '', 'js') ?>"; if (!r) return 0; const i = ORDERS.findIndex(o => o.no.replace(/^#/, "") === r); return i < 0 ? 0 : i; })(), bulkSent:false, err:{},
@@ -998,7 +998,7 @@ class Component extends DCLogic {
       menuOpen: s.menuOpen, searchOpen: s.searchOpen, toast: s.toast,
       openMenu: () => this.setState({ menuOpen:true }), closeMenu: () => this.setState({ menuOpen:false }),
       toggleSearch: () => this.setState({ searchOpen: !s.searchOpen }),
-      query: s.query, onQuery: e => this.setState({ query: e.target.value, shown: 8 }),
+      query: s.query, onQuery: e => this.setState({ query: e.target.value, shown: 8, suggestOpen: true }),
       runSearch: () => this.nav("menu", { query: s.query, shown: 8 }),
       goHome: () => this.nav("home"), goMenu: () => this.nav("menu", { category:"Best Sellers", shown:8, query:"" }),
       goCakes: () => this.nav("menu", { category:"Breads" }), goCart: () => this.nav("cart"),
@@ -1008,7 +1008,10 @@ class Component extends DCLogic {
       hasCart: Object.keys(s.cart).length > 0,
       hasQuery: !!s.query,
       clearQuery: () => this.setState({ query: "", shown: 8 }),
-      onSearchKey: e => { if (e.key === "Enter") { e.preventDefault(); this.nav("menu", { query: s.query, shown: 8 }); } },
+      onSearchKey: e => {
+        if (e.key === "Enter") { e.preventDefault(); this.setState({ suggestOpen: false }); this.nav("menu", { query: s.query, shown: 8 }); }
+        else if (e.key === "Escape") { this.setState({ suggestOpen: false }); }
+      },
       cartLines: lines, cartEmpty: lines.length === 0,
       moqOk,
       moqWarn: !moqOk,
@@ -1254,14 +1257,16 @@ class Component extends DCLogic {
       viewMore: () => this.setState({ shown: s.shown + 8 }),
       hasQuery: q.length > 0,
       clearQuery: () => this.setState({ query:"", shown:8 }),
-      showSuggest: q.length > 1 && matches.length > 0,
+      showSuggest: q.length > 1 && matches.length > 0 && s.suggestOpen,
       // The menu page has its own search box bound to the same query, so
       // without this both dropdowns would open at once on that page.
-      showSuggestHeader: q.length > 1 && matches.length > 0 && s.page !== "menu",
+      showSuggestHeader: q.length > 1 && matches.length > 0 && s.suggestOpen && s.page !== "menu",
       suggestions: matches.slice(0, 5).map(p => ({
         name:p.name, category:p.cat, image:p.image, price:this.money(p.price),
         ...this.originOf(p),
-        open: () => this.openProduct(p)
+        // Close before navigating — the query stays in the box, so without
+        // this the list would still be open on the product page.
+        open: () => { this.setState({ suggestOpen: false }); this.openProduct(p); }
       })),
       browseBest: () => this.setState({ query:"", category:"Best Sellers", shown:8 }),
       showMobileCart: Object.keys(s.cart).length > 0,
