@@ -13,9 +13,27 @@
       </div>
       <div style="position:relative; order:0">
         <div style="position:absolute; inset:-5% -3% 5% -7%; background:#9E1C60; opacity:0.10; border-radius:50% 50% 46% 54% / 54% 46% 50% 50%"></div>
-        <div style="position:relative; aspect-ratio:1/1; border-radius:50% 50% 44% 56% / 56% 44% 50% 50%; overflow:hidden; background:#F3E7D6">
-          <img src="https://www.daccadelights.com/assets/Items/croissants.jpeg" alt="Freshly baked croissants" style="width:100%; height:100%; object-fit:cover; display:block">
+        <div role="group" aria-roledescription="carousel" aria-label="Freshly baked today"
+             style="position:relative; aspect-ratio:1/1; border-radius:50% 50% 44% 56% / 56% 44% 50% 50%; overflow:hidden; background:#F3E7D6">
+          <sc-for list="{{ heroSlides }}" as="h" hint-placeholder-count="6">
+            <img src="{{ h.src }}" alt="{{ h.alt }}" loading="lazy" onError="{{ onImgError }}"
+                 style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; opacity:{{ h.opacity }}; z-index:{{ h.zIndex }}; transition:opacity 900ms ease">
+          </sc-for>
+
+          <sc-if value="{{ heroOrigin.showOrigin }}" hint-placeholder-val="{{ false }}">
+            <span title="{{ heroOrigin.originTitle }}" style="position:absolute; right:16%; bottom:12%; z-index:3; background:{{ heroOrigin.originBg }}; color:#FFFFFF; font-size:10.5px; font-weight:700; border-radius:999px; padding:5px 11px">{{ heroOrigin.originLabel }}</span>
+          </sc-if>
         </div>
+
+        <sc-if value="{{ hasHeroCarousel }}" hint-placeholder-val="{{ true }}">
+          <div role="tablist" aria-label="Choose hero image"
+               style="display:flex; justify-content:center; gap:7px; margin-top:14px">
+            <sc-for list="{{ heroDots }}" as="d" hint-placeholder-count="6">
+              <button onClick="{{ d.go }}" aria-label="{{ d.label }}"
+                      style="height:8px; width:{{ d.width }}; padding:0; border:0; border-radius:999px; cursor:pointer; background:{{ d.bg }}; transition:width 240ms ease, background 240ms ease"></button>
+            </sc-for>
+          </div>
+        </sc-if>
         
         
       </div>

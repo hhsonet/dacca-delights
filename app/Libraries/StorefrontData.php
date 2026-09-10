@@ -38,6 +38,7 @@ class StorefrontData
             'COD_ZONES'     => $this->codZones(),
             'TESTIMONIALS'  => $this->testimonials(),
             'GALLERY'       => $this->gallery(),
+            'HERO'          => $this->heroImages($products),
             'ORDERS'        => $this->orders(),
         ];
     }
@@ -182,6 +183,62 @@ class StorefrontData
                 'quote' => $t['quote'],
                 'item'  => $t['item'] ?? '',
             ];
+        }
+
+        return $out;
+    }
+
+    /**
+     * Images for the home-page hero carousel.
+     *
+     * Drawn from the catalogue so it stays current as products are added, and
+     * shuffled on every request so the same photo is not always first. Capped
+     * at MAX_HERO; duplicates (several products sharing a category image) are
+     * dropped so the carousel never shows the same picture twice.
+     */
+    public const MAX_HERO = 6;
+
+    private function heroImages(array $products): array
+    {
+        // Products with an uploaded photo lead — those are real shots of the
+        // actual bake rather than a shared category image.
+        $withUpload = [];
+        $withStock  = [];
+
+        foreach ($products as $p) {
+            if (($p['image'] ?? '') === '') {
+                continue;
+            }
+            if (!empty($p['photos'])) {
+                $withUpload[] = $p;
+            } else {
+                $withStock[] = $p;
+            }
+        }
+
+        shuffle($withUpload);
+        shuffle($withStock);
+
+        $out  = [];
+        $seen = [];
+
+        foreach (array_merge($withUpload, $withStock) as $p) {
+            $src = $p['image'];
+            if (isset($seen[$src])) {
+                continue;
+            }
+            $seen[$src] = true;
+
+            $out[] = [
+                'src'    => $src,
+                'alt'    => $p['name'],
+                'isAi'   => $p['isAi'] ?? false,
+                'marked' => $p['marked'] ?? false,
+            ];
+
+            if (count($out) >= self::MAX_HERO) {
+                break;
+            }
         }
 
         return $out;
