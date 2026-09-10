@@ -417,7 +417,6 @@ class Component extends DCLogic {
       // Real is drawn as a camera icon in the templates, so the word is kept
       // separate from the mark. isReal drives that branch.
       isReal:      marked && !isAi,
-      originWord:  marked ? (isAi ? "AI" : "Real") : "",
       originTitle: marked
         ? (isAi ? "AI-generated image, not a photograph of this item"
                 : "Real photograph of this item")

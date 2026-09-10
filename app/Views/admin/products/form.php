@@ -92,8 +92,8 @@ ob_start();
             <img src="<?= esc(base_url('uploads/products/' . $row['code'] . '/' . $ph['filename'])) ?>"
                  alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
             <span title="<?= $isAi ? 'AI-generated image' : 'Real photograph' ?>"
-                  style="position:absolute;left:7px;top:7px;display:inline-flex;align-items:center;gap:4px;
-                         padding:3px 8px;border-radius:999px;font-size:10.5px;font-weight:700;
+                  style="position:absolute;left:7px;top:7px;display:inline-flex;align-items:center;justify-content:center;
+                         padding:5px;border-radius:999px;
                          background:<?= $isAi ? 'rgba(158,28,96,.92)' : 'rgba(23,105,63,.92)' ?>;color:#fff">
               <?php if ($isAi): ?>
                 <!-- AI mark: framed "AI" with a sparkle breaking the corner. -->
@@ -110,7 +110,6 @@ ob_start();
                   <circle cx="256" cy="288" r="64"/>
                 </svg>
               <?php endif; ?>
-              <span><?= $isAi ? 'AI' : 'Real' ?></span>
             </span>
           </div>
           <div style="padding:9px;display:flex;flex-direction:column;gap:7px">
