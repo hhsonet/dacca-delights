@@ -96,19 +96,9 @@ ob_start();
                          padding:5px;border-radius:999px;
                          background:<?= $isAi ? 'rgba(158,28,96,.92)' : 'rgba(23,105,63,.92)' ?>;color:#fff">
               <?php if ($isAi): ?>
-                <!-- AI mark: framed "AI" with a sparkle breaking the corner. -->
-                <svg viewBox="0 0 512 512" width="12" height="12" aria-hidden="true" style="display:block;flex:none">
-                  <path d="M432 268V152a72 72 0 0 0-72-72H152a72 72 0 0 0-72 72v208a72 72 0 0 0 72 72h140" fill="none" stroke="currentColor" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M168 336l46-146 46 146M182 296h64" fill="none" stroke="currentColor" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M316 190v146" fill="none" stroke="currentColor" stroke-width="30" stroke-linecap="round"/>
-                  <path d="M404 292q16 80 104 104-88 24-104 104-16-80-104-104 88-24 104-104Z" fill="currentColor"/>
-                </svg>
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;flex:none"><path d="M3 8.5V3h5.5"/><path d="M15.5 3H21v5.5"/><path d="M21 15.5V21h-5.5"/><path d="M8.5 21H3v-5.5"/><path d="M13.6 9.1q1.05 3.45 4.5 4.5-3.45 1.05-4.5 4.5-1.05-3.45-4.5-4.5 3.45-1.05 4.5-4.5Z"/><path d="M8.5 5.9q.5 1.7 2.2 2.2-1.7.5-2.2 2.2-.5-1.7-2.2-2.2 1.7-.5 2.2-2.2Z"/></svg>
               <?php else: ?>
-                <!-- Camera: the lens ring is a hole (evenodd) so it reads on any badge colour. -->
-                <svg viewBox="0 0 512 512" fill="currentColor" width="11" height="11" aria-hidden="true" style="display:block;flex:none">
-                  <path fill-rule="evenodd" d="M195.8 61h120.4a64 64 0 0 1 53.3 28.6L395.1 128H448a64 64 0 0 1 64 64v192a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64V192a64 64 0 0 1 64-64h52.9l25.6-38.4A64 64 0 0 1 195.8 61ZM256 176a112 112 0 1 0 0 224 112 112 0 0 0 0-224Zm168-16a16 16 0 0 0 0 32h24a16 16 0 0 0 0-32h-24Z"/>
-                  <circle cx="256" cy="288" r="64"/>
-                </svg>
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;flex:none"><path d="M3 8.5V3h5.5"/><path d="M15.5 3H21v5.5"/><path d="M21 15.5V21h-5.5"/><path d="M8.5 21H3v-5.5"/><path d="M12 8.4v7.2"/><path d="M8.4 12h7.2"/></svg>
               <?php endif; ?>
             </span>
           </div>
