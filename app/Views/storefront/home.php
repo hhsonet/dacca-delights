@@ -1,41 +1,55 @@
 <?= $this->extend('storefront/layout') ?>
 <?= $this->section('page') ?>
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-    <section style="max-width: 1200px; margin: 0 auto; padding: clamp(20px,4vw,56px) 16px clamp(28px,4vw,64px); display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: clamp(24px,4vw,52px); align-items: center; position: relative">
-      <div style="display:flex; flex-direction:column; gap:18px; order:1">
-        <span style="font-size:11px; font-weight:700; letter-spacing:0.24em; color:#9E1C60">BAKED FRESH DAILY</span>
-        <h1 style="font-family: 'Fraunces',serif; font-weight: 700; font-size: clamp(42px,8vw,74px); line-height: 1.02; margin: 0; color: #561530; letter-spacing: -0.01em; text-wrap: balance; text-decoration-line: none; text-align: left">Pre-Order Today. Enjoy It Fresh.</h1>
-        <p style="margin:0; font-size:16px; line-height:1.7; font-weight:500; color:#2C0E17; max-width:46ch; text-wrap:pretty">We’re a Dhaka-based cloud kitchen, baking in small batches and delivering freshly baked breads, pastries, cakes and desserts to your door.</p>
-        <div style="display:flex; flex-wrap:wrap; gap:12px; padding-top:4px">
-          <button onClick="{{ goMenu }}" style="background: #F5AD18; color: #561530; border: 0; border-radius: 18px; padding: 17px 30px; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 26px rgba(245,173,24,0.34); transition: transform 160ms ease, box-shadow 160ms ease; height: 50px; text-transform: capitalize" style-hover="transform:translateY(-2px); box-shadow:0 16px 34px rgba(245,173,24,0.42)">Pre-Order Now</button>
-          <button onClick="{{ goMenu }}" style="background: #FFFFFF; color: #561530; border: 1px solid #EADFE2; border-radius: 18px; padding: 17px 28px; font-size: 13px; font-weight: 600; cursor: pointer; transition: border-color 160ms ease; height: 50px; text-transform: capitalize" style-hover="border-color:#561530">Explore Menu</button>
-        </div>
-      </div>
-      <div style="position:relative; order:0">
-        <div style="position:absolute; inset:-5% -3% 5% -7%; background:#9E1C60; opacity:0.10; border-radius:50% 50% 46% 54% / 54% 46% 50% 50%"></div>
-        <div role="group" aria-roledescription="carousel" aria-label="Freshly baked today"
-             style="position:relative; aspect-ratio:1/1; border-radius:50% 50% 44% 56% / 56% 44% 50% 50%; overflow:hidden; background:#F3E7D6">
-          <sc-for list="{{ heroSlides }}" as="h" hint-placeholder-count="6">
-            <img src="{{ h.src }}" alt="{{ h.alt }}" loading="lazy" onError="{{ onImgError }}"
-                 style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; opacity:{{ h.opacity }}; z-index:{{ h.zIndex }}; transition:opacity 900ms ease">
-          </sc-for>
+    <section style="max-width:1200px; margin:0 auto; padding:clamp(14px,2vw,28px) 16px clamp(28px,4vw,56px)">
+      <div style="border-radius:32px; overflow:hidden; background:#561530; color:#FFF9F1; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))">
 
-          <sc-if value="{{ heroOrigin.showOrigin }}" hint-placeholder-val="{{ false }}">
-            <span title="{{ heroOrigin.originTitle }}" style="position:absolute; right:16%; bottom:12%; z-index:3; background:{{ heroOrigin.originBg }}; color:#FFFFFF; font-size:10.5px; font-weight:700; border-radius:999px; display:inline-flex; align-items:center; gap:5px; padding:5px 11px"><sc-if value="{{ heroOrigin.isAi }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 512 512" width="12" height="12" aria-hidden="true" focusable="false" style="display:block; flex:none"><path d="M432 268V152a72 72 0 0 0-72-72H152a72 72 0 0 0-72 72v208a72 72 0 0 0 72 72h140" fill="none" stroke="currentColor" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/><path d="M168 336l46-146 46 146M182 296h64" fill="none" stroke="currentColor" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/><path d="M316 190v146" fill="none" stroke="currentColor" stroke-width="30" stroke-linecap="round"/><path d="M404 292q16 80 104 104-88 24-104 104-16-80-104-104 88-24 104-104Z" fill="currentColor"/></svg></sc-if><sc-if value="{{ heroOrigin.isReal }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 512 512" fill="currentColor" width="11" height="11" aria-hidden="true" focusable="false" style="display:block; flex:none"><path fill-rule="evenodd" d="M195.8 61h120.4a64 64 0 0 1 53.3 28.6L395.1 128H448a64 64 0 0 1 64 64v192a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64V192a64 64 0 0 1 64-64h52.9l25.6-38.4A64 64 0 0 1 195.8 61ZM256 176a112 112 0 1 0 0 224 112 112 0 0 0 0-224Zm168-16a16 16 0 0 0 0 32h24a16 16 0 0 0 0-32h-24Z"/><circle cx="256" cy="288" r="64"/></svg></sc-if><span>{{ heroOrigin.originWord }}</span></span>
-          </sc-if>
-        </div>
+        <div style="order:0; position:relative; background:#6B2440; min-height:clamp(260px,46vw,100%)">
+          <img src="https://www.daccadelights.com/assets/Items/croissants.jpeg"
+               alt="Freshly baked butter croissants, still warm from the oven"
+               onError="{{ onImgError }}"
+               style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block">
+          <!-- Darkens the edge nearest the copy so the two cells read as one panel. -->
+          <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(86,21,48,0.55) 0%, rgba(86,21,48,0) 55%)"></div>
 
-        <sc-if value="{{ hasHeroCarousel }}" hint-placeholder-val="{{ true }}">
-          <div role="tablist" aria-label="Choose hero image"
-               style="display:flex; justify-content:center; gap:7px; margin-top:14px">
-            <sc-for list="{{ heroDots }}" as="d" hint-placeholder-count="6">
-              <button onClick="{{ d.go }}" aria-label="{{ d.label }}"
-                      style="height:8px; width:{{ d.width }}; padding:0; border:0; border-radius:999px; cursor:pointer; background:{{ d.bg }}; transition:width 240ms ease, background 240ms ease"></button>
-            </sc-for>
+          <div style="position:absolute; left:clamp(16px,3vw,28px); bottom:clamp(16px,3vw,28px); background:#FFF9F1; color:#561530; border-radius:16px; padding:12px 16px; box-shadow:0 12px 30px rgba(0,0,0,0.22)">
+            <div style="font-size:10px; font-weight:700; letter-spacing:0.18em; color:#9E1C60">TODAY’S BATCH</div>
+            <div style="font-family:'Fraunces',serif; font-size:17px; font-weight:600; margin-top:2px">Butter Croissants</div>
           </div>
-        </sc-if>
-        
-        
+        </div>
+
+        <div style="order:1; padding:clamp(28px,5vw,60px); display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:20px">
+
+          <div style="display:flex; align-items:center; gap:12px">
+            <span style="width:34px; height:2px; background:#F5AD18; flex:none"></span>
+            <span style="font-size:11px; font-weight:700; letter-spacing:0.24em; color:#F5AD18">BAKED FRESH DAILY</span>
+          </div>
+
+          <h1 style="font-family:'Fraunces',serif; font-weight:700; font-size:clamp(40px,7vw,68px); line-height:1.03; letter-spacing:-0.015em; margin:0; text-align:left">Pre-Order Today.<br>Enjoy It Fresh.</h1>
+
+          <p style="margin:0; font-size:16px; line-height:1.7; font-weight:500; color:#F0D9DF; max-width:44ch; text-wrap:pretty">We’re a Dhaka-based cloud kitchen, baking in small batches and delivering freshly baked breads, pastries, cakes and desserts to your door.</p>
+
+          <div style="display:flex; flex-wrap:wrap; gap:12px">
+            <button onClick="{{ goMenu }}" style="height:52px; padding:0 28px; border:0; border-radius:18px; background:#F5AD18; color:#561530; font-size:13px; font-weight:700; cursor:pointer; box-shadow:0 10px 26px rgba(0,0,0,0.24); transition:transform 160ms ease, box-shadow 160ms ease" style-hover="transform:translateY(-2px); box-shadow:0 16px 34px rgba(0,0,0,0.32)">Pre-Order Now</button>
+            <button onClick="{{ goMenu }}" style="height:52px; padding:0 26px; border:1px solid rgba(255,249,241,0.42); border-radius:18px; background:transparent; color:#FFF9F1; font-size:13px; font-weight:600; cursor:pointer; transition:background 160ms ease, border-color 160ms ease" style-hover="background:rgba(255,249,241,0.12); border-color:#FFF9F1">Explore Menu</button>
+          </div>
+
+          <div style="width:100%; border-top:1px solid rgba(255,249,241,0.18); padding-top:22px; display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:14px">
+            <div>
+              <div style="font-family:'Fraunces',serif; font-size:22px; color:#F5AD18">100+</div>
+              <div style="font-size:11px; font-weight:600; letter-spacing:0.1em; color:#E4C5CE">MENU ITEMS</div>
+            </div>
+            <div>
+              <div style="font-family:'Fraunces',serif; font-size:22px; color:#F5AD18">Same day</div>
+              <div style="font-size:11px; font-weight:600; letter-spacing:0.1em; color:#E4C5CE">DHAKA DELIVERY</div>
+            </div>
+            <div>
+              <div style="font-family:'Fraunces',serif; font-size:22px; color:#F5AD18">Free</div>
+              <div style="font-size:11px; font-weight:600; letter-spacing:0.1em; color:#E4C5CE">SELF PICKUP</div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 

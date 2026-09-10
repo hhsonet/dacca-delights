@@ -74,9 +74,6 @@ const PRODUCTS = <?= json_encode($dd['PRODUCTS'], JSON_UNESCAPED_UNICODE|JSON_UN
 const FEATURED = <?= json_encode($dd['FEATURED'], JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) ?>;
 
 const GALLERY = <?= json_encode($dd['GALLERY'], JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) ?>;
-// Hero carousel images — already shuffled server-side, capped at 6.
-const HERO = <?= json_encode($dd['HERO'] ?? [], JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) ?>;
-const HERO_MS = 4500;
 
 const TESTIMONIALS = <?= json_encode($dd['TESTIMONIALS'], JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) ?>;
 
@@ -137,7 +134,7 @@ const COUNTRY_CODES = [
 class Component extends DCLogic {
   state = { page:"<?= esc($page, 'js') ?>", slug:"<?= esc($slug ?? 'sourdough-bread', 'js') ?>", cart:{}, category:"<?= esc($category ?? 'Best Sellers', 'js') ?>", query:"<?= esc($query ?? '', 'js') ?>", shown:8, searchOpen:false, menuOpen:false,
             qty:1, payment:"", coupon:"", couponOk:false, orderNo:"", paid:"", toast:"", authMode:"<?= esc($authMode ?? 'login', 'js') ?>", authBusy:false,
-            orderBusy:false, heroIx:0,
+            orderBusy:false,
             authed: DD_SESSION.authed, customerName: DD_SESSION.name, customerLastName: DD_SESSION.lastName,
             customerEmail: DD_SESSION.email, customerPhone: DD_SESSION.phone,
             accountTab:"<?= esc($accountTab ?? 'Dashboard', 'js') ?>", showPw:false, remember:true, terms:false, orderIx:(function(){ const r = "<?= esc($orderRef ?? '', 'js') ?>"; if (!r) return 0; const i = ORDERS.findIndex(o => o.no.replace(/^#/, "") === r); return i < 0 ? 0 : i; })(), bulkSent:false, err:{},
@@ -147,8 +144,6 @@ class Component extends DCLogic {
             pickup:false, zone:"", localPhone:"", waSame:true, waCode:"+880", waNumber:"", mapsUrl:"", geoStatus:"" };
 
   componentDidMount() {
-    this.startHero();
-
     // Landing straight on a product URL skips openProduct(), so the quantity
     // would start at 1 even for an item with a higher minimum.
     if (this.state.page === "product") {
@@ -362,38 +357,7 @@ class Component extends DCLogic {
   minQtyFor(p) {
     return (p && ITEM_MOQ[p.name]) || 1;
   }
-  /**
-   * Hero carousel auto-advance.
-   *
-   * Only runs on the home page and only when there is more than one image —
-   * a lone photo should not fade to itself. Honours the visitor's
-   * reduced-motion preference, for whom an image cycling on its own is the
-   * exact thing that setting asks to stop.
-   */
-  startHero() {
-    clearInterval(this._heroTimer);
-    if (this.state.page !== "home" || HERO.length < 2) return;
-
-    let reduce = false;
-    try {
-      reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    } catch (e) {}
-    if (reduce) return;
-
-    this._heroTimer = setInterval(() => {
-      // Pause while the tab is hidden — animating off-screen wastes battery
-      // and the visitor sees none of it.
-      if (document.hidden) return;
-      this.setState(s => ({ heroIx: (s.heroIx + 1) % HERO.length }));
-    }, HERO_MS);
-  }
-  /** Jump to a slide and restart the clock, so the choice is not cut short. */
-  showHero(i) {
-    this.setState({ heroIx: i });
-    this.startHero();
-  }
   componentWillUnmount() {
-    clearInterval(this._heroTimer);
     clearInterval(this._otpTimer);
   }
   /** Minimum for an existing cart line, by cart key. */
@@ -1166,25 +1130,6 @@ class Component extends DCLogic {
         this.flash(ok ? "Coupon applied — 20% off" : "That code isn't valid");
       },
       claimOffer: () => { this.setState({ coupon:"SWEET20", couponOk:true }); this.nav("menu", { category:"Best Sellers", shown:8 }); this.flash("SWEET20 saved to your cart"); },
-      // Hero carousel. Every slide is rendered and stacked; only the active one
-      // is opaque, so the change is a crossfade with no layout shift.
-      heroSlides: HERO.map((h, i) => ({
-        src: h.src,
-        alt: h.alt,
-        opacity: i === s.heroIx ? "1" : "0",
-        zIndex: i === s.heroIx ? "2" : "1",
-        ...this.originOf(h)
-      })),
-      heroDots: HERO.map((h, i) => ({
-        label: "Show image " + (i + 1) + " of " + HERO.length,
-        bg: i === s.heroIx ? "#561530" : "rgba(86,21,48,0.28)",
-        width: i === s.heroIx ? "22px" : "8px",
-        go: () => this.showHero(i)
-      })),
-      hasHeroCarousel: HERO.length > 1,
-      // Origin mark follows whichever slide is showing.
-      heroOrigin: this.originOf(HERO[s.heroIx] || {}),
-
       signatureImage: SHOT("Bread.jpeg"),
       aboutImage: IMG("1556910103-1c02745aae4d", 800),
       chatOpen: s.chatOpen, chatClosed: !s.chatOpen,
