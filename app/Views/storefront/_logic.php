@@ -1401,9 +1401,14 @@ class Component extends DCLogic {
       contactCards: [
         { label:"KITCHEN", value:"House 42, Road 7, Dhanmondi, Dhaka 1205" },
         { label:"CONTACT", value:"+880 1622 823269 info@daccadelights.com" },
-        { label:"WORKING HOURS", value:"Baking Hour: 9 am – 3 pm\nDelivery Hour: 5 pm - 9 pm" },
-        { label:"SOCIAL", value:"@daccadelights on Instagram, Facebook and WhatsApp" }
+        { label:"WORKING HOURS", value:"Baking Hour: 9 am – 3 pm\nDelivery Hour: 5 pm - 9 pm" }
       ],
+      // Social handles live here so the URLs are changed in one place. The
+      // icons themselves are drawn in about.php — each brand mark is a
+      // different path, so they cannot come from a list.
+      socialFacebook:  "https://facebook.com/daccadelights",
+      socialInstagram: "https://instagram.com/daccadelights",
+      socialWhatsapp:  "https://wa.me/8801622823269",
       subscribe: () => this.flash("Thanks — you're on the list")
     };
   }
