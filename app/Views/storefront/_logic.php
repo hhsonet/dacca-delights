@@ -240,20 +240,31 @@ class Component extends DCLogic {
   }
   async shareInvoice() {
     const no = this.state.orderNo || "";
-    const text = "Dacca Delights invoice " + no + " — " + (this.state.paid || "") + ", delivery " + (this.state.paidDate || "") + ".";
     try {
-      const out = await this.renderInvoice("png");
-      if (out && navigator.canShare) {
-        const blob = await new Promise(r => out.canvas.toBlob(r, "image/png"));
-        const file = new File([blob], "invoice-" + no + ".png", { type: "image/png" });
-        if (navigator.canShare({ files: [file] })) {
-          await navigator.share({ files: [file], title: "Dacca Delights invoice " + no, text });
-          return;
-        }
+      const out  = await this.renderInvoice("png");
+      const blob = out ? await new Promise(r => out.canvas.toBlob(r, "image/png")) : null;
+      const file = blob ? new File([blob], "invoice-" + no + ".png", { type: "image/png" }) : null;
+
+      // Image only. No title and no text, so nothing but the invoice picture
+      // reaches WhatsApp or the share sheet.
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file] });
+        return;
       }
-      if (navigator.share) { await navigator.share({ title: "Dacca Delights invoice " + no, text }); return; }
-      if (navigator.clipboard) { await navigator.clipboard.writeText(text); this.flash("Invoice details copied"); return; }
-      window.open("https://wa.me/8801622823269?text=" + encodeURIComponent(text), "_blank");
+
+      // This browser cannot share files (most desktops). Save the image so it
+      // can be attached by hand — sharing a text summary instead would defeat
+      // the point.
+      if (out) {
+        const a = document.createElement("a");
+        a.href = out.dataUrl;
+        a.download = "dacca-delights-" + (no || "invoice") + ".png";
+        document.body.appendChild(a); a.click(); a.remove();
+        this.flash("Invoice image saved — attach it to your message");
+        return;
+      }
+
+      this.setState({ exportNote: "Could not render the invoice image here." });
     } catch (e) {
       if (e && e.name === "AbortError") return;
       this.setState({ exportNote: "Sharing is not available here — save the image and send it manually." });
