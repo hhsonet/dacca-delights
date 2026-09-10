@@ -155,7 +155,7 @@
       <div style="display:flex; flex-direction:column; gap:12px">
         
         
-        <img src="<?= base_url("assets/storefront/logo.svg") ?>" alt="Dacca Delights" style="width: 143px; display: block; filter: brightness(0) invert(1); height: 114px; object-fit: cover"><p style="margin: 0; font-size: 13px; line-height: 1.7; color: rgba(255,249,241,0.7); max-width: 34ch; text-align: left; width: 223px; height: 63px">Handcrafted artisan breads, savory bakes, and gourmet pastries. Freshly baked in small batches in Dhaka.</p><div style="display:flex; align-items:center; gap:10px; padding-top:10px">
+        <img src="<?= base_url("assets/storefront/logo.svg") ?>" alt="Dacca Delights" style="width: 143px; display: block; filter: brightness(0) invert(1); height: 114px; object-fit: cover"><p style="margin: 0; font-size: 13px; line-height: 1.7; color: rgba(255,249,241,0.7); max-width: 34ch; text-align: left; width: 223px; height: 63px">Handcrafted artisan breads, savory bakes, and gourmet pastries. Freshly baked in small batches in Dhaka.</p><div style="display:flex; align-items:center; gap:10px; margin-top:22px">
           <a href="{{ socialFacebook }}" target="_blank" rel="noopener noreferrer"
              aria-label="Dacca Delights on Facebook" title="Facebook"
              style="width:40px; height:40px; flex:none; display:flex; align-items:center; justify-content:center; border-radius:999px; border:1px solid rgba(245,173,24,0.45); color:#F5AD18; transition:background 160ms ease, color 160ms ease, border-color 160ms ease"
