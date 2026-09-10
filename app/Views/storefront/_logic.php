@@ -143,7 +143,7 @@ class Component extends DCLogic {
             accountTab:"<?= esc($accountTab ?? 'Dashboard', 'js') ?>", showPw:false, remember:true, terms:false, orderIx:(function(){ const r = "<?= esc($orderRef ?? '', 'js') ?>"; if (!r) return 0; const i = ORDERS.findIndex(o => o.no.replace(/^#/, "") === r); return i < 0 ? 0 : i; })(), bulkSent:false, err:{},
             form:{ name:"", email:"", phone:"", pw:"", pw2:"" },
             shot:0, sugar:"", bform:"", slice:"", filling:"", notes:"",
-            chatOpen:false, chatDraft:"", chatLog:[], chatBusy:false, deliveryDate:"", paidDate:"", invoice:null, exportBusy:false, exportNote:"", idMode:"email", otpVia:"email", phoneStep:false, otpStep:false, otpCode:"", otpDigits:["","","","","",""], otpError:"", resendIn:0, house:"", line1:"", line2:"", zip:"", firstName:"", lastName:"",
+            chatOpen:false, chatDraft:"", chatLog:[], chatBusy:false, chatAsk:false, chatUnhappy:false, chatLastQ:"", deliveryDate:"", paidDate:"", invoice:null, exportBusy:false, exportNote:"", idMode:"email", otpVia:"email", phoneStep:false, otpStep:false, otpCode:"", otpDigits:["","","","","",""], otpError:"", resendIn:0, house:"", line1:"", line2:"", zip:"", firstName:"", lastName:"",
             pickup:false, zone:"", localPhone:"", waSame:true, waCode:"+880", waNumber:"", mapsUrl:"", geoStatus:"" };
 
   componentDidMount() {
@@ -683,7 +683,9 @@ class Component extends DCLogic {
     if (!msg || this.state.chatBusy) return;
 
     this.pushChat("user", msg);
-    this.setState({ chatDraft: "", chatBusy: true });
+    // A new question clears the previous satisfaction prompt — it belongs to
+    // the answer above it, not to the conversation as a whole.
+    this.setState({ chatDraft: "", chatBusy: true, chatAsk: false, chatUnhappy: false, chatLastQ: msg });
     this.scrollChat();
 
     // A beat before replying, so the conversation does not snap back
@@ -696,7 +698,9 @@ class Component extends DCLogic {
         reply = "Something went wrong on my side. Message us on WhatsApp at +880 1622 823269 and we will sort it out.";
       }
       this.pushChat("assistant", reply);
-      this.setState({ chatBusy: false });
+      // Ask whether that landed. A local assistant has a fixed set of
+      // answers, so the honest move is to offer a human when it misses.
+      this.setState({ chatBusy: false, chatAsk: true });
       this.scrollChat();
     }, 260);
   }
@@ -1190,6 +1194,28 @@ class Component extends DCLogic {
       chatScrollRef: el => { this.chatScroll = el; },
       chatEmpty: s.chatLog.length === 0,
       chatBusy: s.chatBusy,
+      // Satisfaction check under the latest answer. Shown once the reply
+      // lands, cleared as soon as the next question is asked.
+      chatAsk: s.chatAsk && !s.chatBusy && !s.chatUnhappy,
+      chatUnhappy: s.chatUnhappy,
+      chatSatYes: () => {
+        this.setState({ chatAsk: false });
+        this.pushChat("assistant", "Good — anything else I can help with?");
+        this.scrollChat();
+      },
+      chatSatNo: () => {
+        this.setState({ chatAsk: false, chatUnhappy: true });
+        this.scrollChat();
+      },
+      // Hands the kitchen the question that went unanswered, so the customer
+      // does not have to type it a second time.
+      chatWhatsapp: () => {
+        const q = (s.chatLastQ || "").trim();
+        const text = "Hello Dacca Delights — I asked your order assistant:\n\n"
+          + (q ? "\"" + q + "\"\n\n" : "")
+          + "Could you help me with this?";
+        window.open("https://wa.me/8801622823269?text=" + encodeURIComponent(text), "_blank", "noopener");
+      },
       chatSendBg: s.chatBusy ? "#EADFE2" : "#F5AD18",
       chatSendCursor: s.chatBusy ? "not-allowed" : "pointer",
       chatDraft: s.chatDraft,
