@@ -299,8 +299,18 @@ class Component extends DCLogic {
     const key = this.cartKey(id, opts);
     const cart = Object.assign({}, this.state.cart);
     const prev = cart[key];
+    const min = this.minQtyFor(PRODUCTS.find(x => x.id === id));
+
+    // A new line always starts at the item's minimum, however little was
+    // asked for; an existing line just steps by the amount requested. The
+    // floor lives here rather than in the callers so every route in — a card,
+    // the product page, the order assistant — gets it. Asking for more than
+    // the minimum is still honoured.
+    const want = n || 1;
+    const qty  = prev ? prev.qty + want : Math.max(want, min);
+
     cart[key] = {
-      id, qty: (prev ? prev.qty : 0) + (n || 1),
+      id, qty,
       sugar: (opts && opts.sugar) || "", form: (opts && opts.form) || "",
       slice: (opts && opts.slice) || "", filling: (opts && opts.filling) || "",
       note: (opts && opts.note) || (prev ? prev.note : "")
@@ -309,7 +319,6 @@ class Component extends DCLogic {
     this.persist(cart);
 
     const product = PRODUCTS.find(x => x.id === id);
-    const min = this.minQtyFor(product);
     // Say why the quantity jumped, otherwise landing on 4 looks like a bug.
     this.flash(!prev && min > 1
       ? product.name + " added — minimum order is " + min
@@ -445,11 +454,11 @@ class Component extends DCLogic {
       addAria: needsOptions(p) ? "Choose options for " + p.name : "Add " + p.name + " to cart",
       open: () => this.openProduct(p),
       // mandatory choices can't be made on a card — send the customer to the item page
-      // First add jumps straight to the item's minimum; once it is in the cart
-      // the same (+) control steps by one.
+      // Always asks for one. add() raises a new line to the item's minimum,
+      // so the same control adds 4 the first time and steps by 1 after that.
       add: needsOptions(p)
         ? () => { this.openProduct(p); this.flash("Choose your options for " + p.name); }
-        : () => this.add(p.id, this.state.cart[this.cartKey(p.id)] ? 1 : this.minQtyFor(p))
+        : () => this.add(p.id, 1)
     };
   }
 
