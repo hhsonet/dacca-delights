@@ -4,7 +4,13 @@ $v = static fn(string $k, $d = '') => esc(old($k, $row[$k] ?? $d) ?? '', 'attr')
 $action = $isEdit ? base_url('admin/products/' . $row['id']) : base_url('admin/products');
 ob_start();
 ?>
-<form method="post" action="<?= $action ?>" class="card" style="padding:18px;max-width:820px">
+<!--
+  The photo manager below has its own forms (upload, delete, mark origin), and
+  a form cannot be nested inside another. So the details form closes before it
+  and the Save button sits underneath, tied back by the form attribute — the
+  customer-visible order is fields, photos, then Save.
+-->
+<form id="productForm" method="post" action="<?= $action ?>" class="card" style="padding:18px;max-width:820px">
   <?= csrf_field() ?>
   <?php if ($isEdit): ?>
     <div class="field">
@@ -60,10 +66,6 @@ ob_start();
     <?php endforeach; ?>
   </div>
 
-  <div class="actions">
-    <button class="btn" type="submit"><?= $isEdit ? 'Save changes' : 'Create product' ?></button>
-    <a class="btn ghost" href="<?= base_url('admin/products') ?>">Cancel</a>
-  </div>
 </form>
 
 <?php if ($isEdit):
@@ -149,4 +151,9 @@ ob_start();
   </form>
 </div>
 <?php endif; ?>
+
+<div class="card actions" style="padding:18px;max-width:820px;margin-top:16px">
+  <button class="btn" type="submit" form="productForm"><?= $isEdit ? 'Save changes' : 'Create product' ?></button>
+  <a class="btn ghost" href="<?= base_url('admin/products') ?>">Cancel</a>
+</div>
 <?php $content = ob_get_clean(); include __DIR__ . '/../_layout.php';
