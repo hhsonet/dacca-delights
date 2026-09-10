@@ -27,6 +27,23 @@ class OrderPlacer
 
     public const BOOKING_WINDOW_DAYS = 30;
 
+    /** Invoice numbers start here, so the sequence is always five digits. */
+    private const INVOICE_BASE = 10000;
+
+    /**
+     * Invoice number: DDIC-[DD][MM][5-digit sequence], e.g. DDIC-100910022.
+     *
+     * The sequence is the order's own primary key, so it is unique by
+     * construction — no retry loop, and no chance of two orders sharing a
+     * number under concurrent checkout. The date is the day it was placed.
+     */
+    public static function invoiceNo(int $orderId, ?string $placedOn = null): string
+    {
+        $ts = $placedOn !== null ? strtotime($placedOn) : time();
+
+        return 'DDIC-' . date('dm', $ts ?: time()) . (self::INVOICE_BASE + $orderId);
+    }
+
     /**
      * Breads sold as-is: no sugar/format choice.
      * These lists mirror the storefront's constants; they belong in the
@@ -387,7 +404,7 @@ class OrderPlacer
                 throw new \RuntimeException(implode(' ', $orders->errors()) ?: 'Could not save the order.');
             }
 
-            $orderNo = 'DD-' . (10000 + (int) $orderId);
+            $orderNo = self::invoiceNo((int) $orderId);
             $db->table('orders')->where('id', $orderId)->update(['order_no' => $orderNo]);
 
             $itemRows = [];

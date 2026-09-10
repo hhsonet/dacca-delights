@@ -288,7 +288,9 @@ class StorefrontData
             }
 
             $out[] = [
-                'no'       => '#' . ltrim($o['order_no'], '#'),
+                // Shown verbatim: the invoice number is already a complete
+                // identifier (DDIC-DDMM#####), so no '#' decoration.
+                'no'       => ltrim($o['order_no'], '#'),
                 'date'     => $o['placed_on'] ? date('F j, Y', strtotime($o['placed_on'])) : '',
                 'payment'  => $o['payment_method'] ?? '',
                 'status'   => $o['status'],
