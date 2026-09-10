@@ -31,17 +31,15 @@ class OrderPlacer
     private const INVOICE_BASE = 10000;
 
     /**
-     * Invoice number: DDIC-[DD][MM][5-digit sequence], e.g. DDIC-100910022.
+     * Invoice number: DDIC followed by a five-digit sequence, e.g. DDIC10022.
      *
      * The sequence is the order's own primary key, so it is unique by
      * construction — no retry loop, and no chance of two orders sharing a
-     * number under concurrent checkout. The date is the day it was placed.
+     * number under concurrent checkout.
      */
-    public static function invoiceNo(int $orderId, ?string $placedOn = null): string
+    public static function invoiceNo(int $orderId): string
     {
-        $ts = $placedOn !== null ? strtotime($placedOn) : time();
-
-        return 'DDIC-' . date('dm', $ts ?: time()) . (self::INVOICE_BASE + $orderId);
+        return 'DDIC' . (self::INVOICE_BASE + $orderId);
     }
 
     /**
