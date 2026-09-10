@@ -93,7 +93,16 @@ ob_start();
                   style="position:absolute;left:7px;top:7px;display:inline-flex;align-items:center;gap:4px;
                          padding:3px 8px;border-radius:999px;font-size:10.5px;font-weight:700;
                          background:<?= $isAi ? 'rgba(158,28,96,.92)' : 'rgba(23,105,63,.92)' ?>;color:#fff">
-              <?= $isAi ? '✦ AI' : '◉ Real' ?>
+              <?php if ($isAi): ?>
+                <span>✦</span>
+              <?php else: ?>
+                <!-- Camera: the lens ring is a hole (evenodd) so it reads on any badge colour. -->
+                <svg viewBox="0 0 512 512" fill="currentColor" width="11" height="11" aria-hidden="true" style="display:block;flex:none">
+                  <path fill-rule="evenodd" d="M195.8 61h120.4a64 64 0 0 1 53.3 28.6L395.1 128H448a64 64 0 0 1 64 64v192a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64V192a64 64 0 0 1 64-64h52.9l25.6-38.4A64 64 0 0 1 195.8 61ZM256 176a112 112 0 1 0 0 224 112 112 0 0 0 0-224Zm168-16a16 16 0 0 0 0 32h24a16 16 0 0 0 0-32h-24Z"/>
+                  <circle cx="256" cy="288" r="64"/>
+                </svg>
+              <?php endif; ?>
+              <span><?= $isAi ? 'AI' : 'Real' ?></span>
             </span>
           </div>
           <div style="padding:9px;display:flex;flex-direction:column;gap:7px">

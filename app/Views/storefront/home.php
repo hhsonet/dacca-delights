@@ -21,7 +21,7 @@
           </sc-for>
 
           <sc-if value="{{ heroOrigin.showOrigin }}" hint-placeholder-val="{{ false }}">
-            <span title="{{ heroOrigin.originTitle }}" style="position:absolute; right:16%; bottom:12%; z-index:3; background:{{ heroOrigin.originBg }}; color:#FFFFFF; font-size:10.5px; font-weight:700; border-radius:999px; padding:5px 11px">{{ heroOrigin.originLabel }}</span>
+            <span title="{{ heroOrigin.originTitle }}" style="position:absolute; right:16%; bottom:12%; z-index:3; background:{{ heroOrigin.originBg }}; color:#FFFFFF; font-size:10.5px; font-weight:700; border-radius:999px; display:inline-flex; align-items:center; gap:5px; padding:5px 11px"><sc-if value="{{ heroOrigin.isAi }}" hint-placeholder-val="{{ false }}"><span style="font-size:1.05em; line-height:1">✦</span></sc-if><sc-if value="{{ heroOrigin.isReal }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 512 512" fill="currentColor" width="11" height="11" aria-hidden="true" focusable="false" style="display:block; flex:none"><path fill-rule="evenodd" d="M195.8 61h120.4a64 64 0 0 1 53.3 28.6L395.1 128H448a64 64 0 0 1 64 64v192a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64V192a64 64 0 0 1 64-64h52.9l25.6-38.4A64 64 0 0 1 195.8 61ZM256 176a112 112 0 1 0 0 224 112 112 0 0 0 0-224Zm168-16a16 16 0 0 0 0 32h24a16 16 0 0 0 0-32h-24Z"/><circle cx="256" cy="288" r="64"/></svg></sc-if><span>{{ heroOrigin.originWord }}</span></span>
           </sc-if>
         </div>
 
@@ -64,7 +64,7 @@
                 <span style="position:absolute; left:12px; top:12px; background:#9E1C60; color:#FFFFFF; font-size:11px; font-weight:700; border-radius:999px; padding:6px 12px">New</span>
               </sc-if>
               <sc-if value="{{ p.showOrigin }}" hint-placeholder-val="{{ false }}">
-                <span title="{{ p.originTitle }}" style="position:absolute; right:12px; bottom:12px; background:{{ p.originBg }}; color:#FFFFFF; font-size:10px; font-weight:700; border-radius:999px; padding:5px 10px">{{ p.originLabel }}</span>
+                <span title="{{ p.originTitle }}" style="position:absolute; right:12px; bottom:12px; background:{{ p.originBg }}; color:#FFFFFF; font-size:10px; font-weight:700; border-radius:999px; display:inline-flex; align-items:center; gap:4px; padding:5px 10px"><sc-if value="{{ p.isAi }}" hint-placeholder-val="{{ false }}"><span style="font-size:1.05em; line-height:1">✦</span></sc-if><sc-if value="{{ p.isReal }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 512 512" fill="currentColor" width="11" height="11" aria-hidden="true" focusable="false" style="display:block; flex:none"><path fill-rule="evenodd" d="M195.8 61h120.4a64 64 0 0 1 53.3 28.6L395.1 128H448a64 64 0 0 1 64 64v192a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64V192a64 64 0 0 1 64-64h52.9l25.6-38.4A64 64 0 0 1 195.8 61ZM256 176a112 112 0 1 0 0 224 112 112 0 0 0 0-224Zm168-16a16 16 0 0 0 0 32h24a16 16 0 0 0 0-32h-24Z"/><circle cx="256" cy="288" r="64"/></svg></sc-if><span>{{ p.originWord }}</span></span>
               </sc-if>
             </button>
             <div style="padding:16px; display:flex; flex-direction:column; gap:8px; flex:1">

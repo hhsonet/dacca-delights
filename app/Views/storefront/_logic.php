@@ -418,9 +418,10 @@ class Component extends DCLogic {
     return {
       isAi,
       showOrigin:  marked,
-      originLabel: marked ? (isAi ? "✦ AI" : "◉ Real") : "",
-      // Compact form for thumbnail-sized images where a pill will not fit.
-      originMark:  marked ? (isAi ? "✦" : "◉") : "",
+      // Real is drawn as a camera icon in the templates, so the word is kept
+      // separate from the mark. isReal drives that branch.
+      isReal:      marked && !isAi,
+      originWord:  marked ? (isAi ? "AI" : "Real") : "",
       originTitle: marked
         ? (isAi ? "AI-generated image, not a photograph of this item"
                 : "Real photograph of this item")
